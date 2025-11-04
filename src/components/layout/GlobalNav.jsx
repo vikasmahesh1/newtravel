@@ -6,7 +6,6 @@ const navItems = [
   { label: 'Hotels', to: '/hotels', icon: '🏨' },
   { label: 'Buses', to: '/buses', icon: '🚌' },
   { label: 'Holidays', to: '/holidays', icon: '🏝️' },
-  { label: 'Contact', to: '/contact', icon: '📞' },
 ]
 
 export function GlobalNav() {

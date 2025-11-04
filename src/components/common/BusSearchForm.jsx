@@ -2,17 +2,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { searchBuses, updateCriteria } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
+import { DatePickerField } from './DatePickerField'
 
 export function BusSearchForm({ compact = false }) {
   const dispatch = useDispatch()
   const { criteria, status } = useSelector((state) => selectSearchDomain(state, 'buses'))
   const [formValues, setFormValues] = useState(criteria)
-  const hasDateSelected = Boolean(formValues.date)
-  const formattedDate = hasDateSelected
-    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
-        new Date(formValues.date)
-      )
-    : 'Select a date'
 
   useEffect(() => {
     setFormValues(criteria)
@@ -22,6 +17,10 @@ export function BusSearchForm({ compact = false }) {
     const { name, value } = event.target
     const nextValue = name === 'passengers' ? Number(value) : value
     setFormValues((prev) => ({ ...prev, [name]: nextValue }))
+  }
+
+  const handleDateChange = (nextDate) => {
+    setFormValues((prev) => ({ ...prev, date: nextDate }))
   }
 
   const handleSubmit = (event) => {
@@ -60,23 +59,14 @@ export function BusSearchForm({ compact = false }) {
           required={!compact}
         />
       </div>
-      <div>
-        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="bus-date">
-          Date
-        </label>
-        <p className={`date-preview ${hasDateSelected ? 'date-preview--active' : ''}`} aria-live="polite">
-          <span aria-hidden="true">📅</span>
-          {formattedDate}
-        </p>
-        <input
-          id="bus-date"
-          type="date"
-          name="date"
-          className="input input-date"
-          value={formValues.date}
-          onChange={handleChange}
-        />
-      </div>
+      <DatePickerField
+        id="bus-date"
+        name="date"
+        label="Travel date"
+        value={formValues.date}
+        min={new Date().toISOString().slice(0, 10)}
+        onChange={handleDateChange}
+      />
       <div>
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="bus-passengers">
           Travelers

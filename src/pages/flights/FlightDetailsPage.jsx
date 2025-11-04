@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { mockApi } from '../../services/mockApi'
+import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
 
 export default function FlightDetailsPage() {
   const { flightId } = useParams()
@@ -37,7 +38,7 @@ export default function FlightDetailsPage() {
             {flight.from} → {flight.to}
           </h1>
           <p className="text-sm text-slate-500">
-            Depart {new Date(flight.departure).toLocaleString()} · Arrive {new Date(flight.arrival).toLocaleString()}
+            Depart {formatDateTime(flight.departure)} · Arrive {formatDateTime(flight.arrival)}
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
@@ -70,7 +71,7 @@ export default function FlightDetailsPage() {
             <p className="text-sm text-slate-500">Includes taxes and carrier-imposed fees.</p>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-semibold text-slate-900">${flight.price}</p>
+            <p className="text-3xl font-semibold text-slate-900">{formatINRCurrency(flight.price)}</p>
             <p className="text-xs text-slate-500">per traveler</p>
           </div>
           <button className="btn-primary w-full md:w-auto">Continue to checkout</button>

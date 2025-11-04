@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { FlightSearchForm } from '../../components/common/FlightSearchForm'
 import { searchFlights } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
+import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
 
 const sortOptions = [
   { id: 'price-asc', label: 'Price: Low to High' },
@@ -108,7 +109,7 @@ export default function FlightsSearchPage() {
                   {flight.from} → {flight.to}
                 </p>
                 <p className="text-sm text-slate-500">
-                  Depart {new Date(flight.departure).toLocaleString()} · Arrive {new Date(flight.arrival).toLocaleString()}
+                  Depart {formatDateTime(flight.departure)} · Arrive {formatDateTime(flight.arrival)}
                 </p>
                 <div className="flex flex-wrap gap-2 text-xs text-slate-500">
                   <span>{flight.duration}</span>
@@ -117,7 +118,7 @@ export default function FlightsSearchPage() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-semibold text-slate-900">${flight.price}</p>
+                <p className="text-2xl font-semibold text-slate-900">{formatINRCurrency(flight.price)}</p>
                 <p className="text-xs text-slate-500">per traveler</p>
                 <span className="badge mt-3 inline-flex bg-secondary/10 text-secondary">View details</span>
               </div>

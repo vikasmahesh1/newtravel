@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { HotelSearchForm } from '../../components/common/HotelSearchForm'
 import { searchHotels } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
+import { formatINRCurrency } from '../../utils/formatters'
 
 const ratingFilters = [
   { id: 'all', label: 'All ratings' },
@@ -106,7 +107,7 @@ export default function HotelsSearchPage() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-semibold text-slate-900">${hotel.pricePerNight}</p>
+                <p className="text-2xl font-semibold text-slate-900">{formatINRCurrency(hotel.pricePerNight)}</p>
                 <p className="text-xs text-slate-500">per night</p>
                 <span className="badge mt-3 inline-flex bg-secondary/10 text-secondary">View details</span>
               </div>

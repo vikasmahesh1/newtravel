@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { mockApi } from '../../services/mockApi'
+import { formatINRCurrency } from '../../utils/formatters'
 
 export default function HotelDetailsPage() {
   const { hotelId } = useParams()
@@ -49,7 +50,7 @@ export default function HotelDetailsPage() {
             </ul>
           </div>
           <div className="rounded-3xl bg-primary/10 p-6 text-right text-primary">
-            <p className="text-2xl font-semibold text-primary">${hotel.pricePerNight}</p>
+            <p className="text-2xl font-semibold text-primary">{formatINRCurrency(hotel.pricePerNight)}</p>
             <p className="text-xs text-primary/70">per night · taxes extra</p>
             <button className="btn-primary mt-4 w-full md:w-auto">Reserve stay</button>
           </div>

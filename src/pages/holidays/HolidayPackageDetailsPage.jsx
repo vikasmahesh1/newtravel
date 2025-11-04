@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { mockApi } from '../../services/mockApi'
+import { formatINRCurrency } from '../../utils/formatters'
 
 export default function HolidayPackageDetailsPage() {
   const { holidayId } = useParams()
@@ -57,7 +58,7 @@ export default function HolidayPackageDetailsPage() {
             <p className="text-sm text-slate-500">Includes flights, boutique stays, private guides, and curated experiences.</p>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-semibold text-slate-900">${holiday.pricePerPerson}</p>
+            <p className="text-3xl font-semibold text-slate-900">{formatINRCurrency(holiday.pricePerPerson)}</p>
             <p className="text-xs text-slate-500">per traveler · flexible payment options available</p>
           </div>
           <button className="btn-primary w-full md:w-auto">Speak with a VyuGo curator</button>

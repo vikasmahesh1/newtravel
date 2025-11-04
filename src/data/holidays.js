@@ -1,64 +1,58 @@
-const holidays = [
-  {
-    id: 'amalfi-sunrise',
-    name: 'Amalfi Sunrise Sojourn',
-    destination: 'Amalfi Coast, Italy',
-    theme: 'Romantic retreats',
-    duration: '6 nights / 7 days',
-    pricePerPerson: 1450,
-    travelersIncluded: 2,
-    highlights: ['Cliffside boutique stay', 'Private sunset cruise', 'Limoncello making workshop'],
-    description:
-      'Unwind along the pastel-hued Amalfi coastline with a boutique cliffside suite, Michelin tasting menus, and a private skipper guiding you through hidden coves.',
-  },
-  {
-    id: 'kyoto-culture',
-    name: 'Kyoto Culture Canvas',
-    destination: 'Kyoto, Japan',
-    theme: 'Culture & heritage',
-    duration: '8 nights / 9 days',
-    pricePerPerson: 1890,
-    travelersIncluded: 2,
-    highlights: ['Ryokan with onsen', 'Tea ceremony with host', 'Private temple night tour'],
-    description:
-      'Experience Kyoto through artisan-led workshops, tranquil ryokan stays, and after-dark strolls through lantern-lit temples with a local curator.',
-  },
-  {
-    id: 'cape-family-safari',
-    name: 'Cape & Safari Family Quest',
-    destination: 'Cape Town & Kruger, South Africa',
-    theme: 'Family adventures',
-    duration: '9 nights / 10 days',
-    pricePerPerson: 2150,
-    travelersIncluded: 4,
-    highlights: ['Table Mountain picnic', 'Junior ranger program', 'Private game drives'],
-    description:
-      'Combine vibrant Cape Town days with big-five safari nights. Tailored for families with junior ranger tracking, seaside markets, and local storytelling.',
-  },
-  {
-    id: 'peru-epic',
-    name: 'Peruvian Peaks & Plates',
-    destination: 'Lima, Sacred Valley & Cusco, Peru',
-    theme: 'Epic expeditions',
-    duration: '7 nights / 8 days',
-    pricePerPerson: 2050,
-    travelersIncluded: 2,
-    highlights: ['Chef-led Lima tasting', 'Luxury Hiram Bingham train', 'Sunrise at Machu Picchu'],
-    description:
-      'From culinary immersions in Lima to the storied peaks of the Andes, this itinerary blends gastronomy, ancient history, and slow-travel luxury.',
-  },
-  {
-    id: 'bali-wellness',
-    name: 'Bali Wellness Flow',
-    destination: 'Ubud & Uluwatu, Bali',
-    theme: 'Wellness escapes',
-    duration: '5 nights / 6 days',
-    pricePerPerson: 1250,
-    travelersIncluded: 2,
-    highlights: ['Clifftop spa rituals', 'Sound healing journey', 'Chef garden cooking class'],
-    description:
-      'Soak up Bali’s serene energy with daily wellness rituals, private guides to hidden waterfalls, and sustainable dining overlooking rice terraces.',
-  },
+const destinations = [
+  { name: 'Backwaters of Alleppey', region: 'Kerala', theme: 'Wellness escapes' },
+  { name: 'Royal Rajasthan Circuit', region: 'Rajasthan', theme: 'Culture & heritage' },
+  { name: 'Himalayan Monasteries', region: 'Sikkim', theme: 'Spiritual journeys' },
+  { name: 'Coffee Trails of Coorg', region: 'Karnataka', theme: 'Nature retreats' },
+  { name: 'Island Life in Havelock', region: 'Andaman & Nicobar', theme: 'Beach escapes' },
+  { name: 'Valley of Flowers Trek', region: 'Uttarakhand', theme: 'Adventure quests' },
+  { name: 'Temple Town Kanchipuram', region: 'Tamil Nadu', theme: 'Culture & heritage' },
+  { name: 'Tea Estates of Darjeeling', region: 'West Bengal', theme: 'Nature retreats' },
+  { name: 'Desert Dunes of Jaisalmer', region: 'Rajasthan', theme: 'Family adventures' },
+  { name: 'Houseboats of Kumarakom', region: 'Kerala', theme: 'Romantic retreats' },
+  { name: 'Vineyards of Nashik', region: 'Maharashtra', theme: 'Gourmet getaways' },
+  { name: 'Meghalaya Living Roots', region: 'Meghalaya', theme: 'Adventure quests' },
+  { name: 'Zanskar Glacier Traverse', region: 'Ladakh', theme: 'Epic expeditions' },
 ]
+
+const durationOptions = ['3 nights / 4 days', '4 nights / 5 days', '5 nights / 6 days', '6 nights / 7 days', '7 nights / 8 days']
+const travelerOptions = [2, 4, 6]
+const highlightPool = [
+  'Private guided tour',
+  'Boutique stay upgrade',
+  'Sunrise experience',
+  'Culinary masterclass',
+  'Heritage walk',
+  'Wellness ritual',
+  'Exclusive ferry',
+  'Local storytelling session',
+  'Jeep safari',
+  'Stargazing soiree',
+  'Backwater cruise',
+  'Tea tasting',
+  'Village immersion',
+]
+
+const holidays = Array.from({ length: 120 }, (_, index) => {
+  const destination = destinations[index % destinations.length]
+  const duration = durationOptions[index % durationOptions.length]
+  const travelersIncluded = travelerOptions[index % travelerOptions.length]
+  const basePrice = 18500 + (index % 20) * 1250
+  const perPerson = basePrice + (travelersIncluded > 2 ? 1500 : 0)
+  const highlights = Array.from({ length: 4 }, (_, highlightIndex) =>
+    highlightPool[(index + highlightIndex) % highlightPool.length]
+  )
+
+  return {
+    id: `HL-IN-${4001 + index}`,
+    name: `${destination.name} by VyuGo`,
+    destination: `${destination.name}, ${destination.region}`,
+    theme: destination.theme,
+    duration,
+    pricePerPerson: perPerson,
+    travelersIncluded,
+    highlights,
+    description: `Immerse yourself in ${destination.name.toLowerCase()} with handpicked stays, local experts, and door-to-door travel support managed by the VyuGo Holidays concierge desk.`,
+  }
+})
 
 export default holidays

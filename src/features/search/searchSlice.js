@@ -69,7 +69,7 @@ const initialState = {
     error: null,
   },
   holidays: {
-    criteria: { theme: 'Romantic retreats', destination: '', startDate: '', endDate: '', travelers: 2, budget: 2500 },
+    criteria: { theme: 'Romantic retreats', destination: '', startDate: '', endDate: '', travelers: 2, budget: 120000 },
     results: [],
     status: 'idle',
     error: null,

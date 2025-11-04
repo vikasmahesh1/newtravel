@@ -10,9 +10,6 @@ const navItems = [
   { label: 'Hotels', to: '/hotels' },
   { label: 'Buses', to: '/buses' },
   { label: 'Holiday packages', to: '/holidays' },
-  { label: 'About', to: '/about' },
-  { label: 'Contact', to: '/contact' },
-  { label: 'Cancellation policy', to: '/cancellation-policy' },
 ]
 
 export function Header() {

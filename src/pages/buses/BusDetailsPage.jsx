@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { mockApi } from '../../services/mockApi'
+import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
 
 export default function BusDetailsPage() {
   const { busId } = useParams()
@@ -35,7 +36,7 @@ export default function BusDetailsPage() {
           <span className="badge">{bus.operator}</span>
           <h1 className="text-3xl font-semibold text-slate-900">{bus.route}</h1>
           <p className="text-sm text-slate-500">
-            Depart {new Date(bus.departure).toLocaleString()} · Arrive {new Date(bus.arrival).toLocaleString()}
+            Depart {formatDateTime(bus.departure)} · Arrive {formatDateTime(bus.arrival)}
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
@@ -49,7 +50,7 @@ export default function BusDetailsPage() {
           </div>
           <div>
             <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Fare</h2>
-            <p className="mt-2 text-lg font-semibold text-slate-900">${bus.price}</p>
+            <p className="mt-2 text-lg font-semibold text-slate-900">{formatINRCurrency(bus.price)}</p>
           </div>
         </div>
         <div>

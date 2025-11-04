@@ -71,6 +71,8 @@ src/
 Key highlights:
 - **Shared layout**: `Header`, `Footer`, and mobile `GlobalNav` ensure consistent navigation.
 - **Reusable search forms**: Flights, hotels, buses, and holiday packages share interaction patterns and dispatch Redux actions.
+- **Intuitive date picking**: A bespoke calendar popover enhances all search flows with tap-friendly, accessible date selection.
+- **India-first datasets**: Mock data now mirrors 100+ real-world Indian routes, stays, and packages for lifelike search results.
 - **Data services**: `services/mockApi.js` can serve static fixtures (including curated holiday packages) or forward requests to your local backend based on `VITE_USE_MOCKS`.
 - **State management**: Redux Toolkit centralizes search criteria/results (across all travel domains) and user authentication state.
 - **Accessibility & responsiveness**: Tailwind CSS powers a responsive layout with focus styles, semantic elements, and reduced motion-friendly animations.
@@ -80,7 +82,7 @@ Key highlights:
 - **Head office**: 1st Floor, Cinema Rd, Opp. Satya Gowri Theatre, Suryanarayana Puram, Kakinada, Andhra Pradesh 533001
 - **Hyderabad branch lounge**: Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033
 - **Concierge desk**: +91 90145 67890 · **Support**: [support@vyugo.in](mailto:support@vyugo.in)
-- Explore the in-app [About](http://localhost:5173/about), [Contact](http://localhost:5173/contact), and [Cancellation Policy](http://localhost:5173/cancellation-policy) pages for detailed information and forms.
+- Explore the in-app [About](http://localhost:5173/about), [Contact](http://localhost:5173/contact), and [Cancellation Policy](http://localhost:5173/cancellation-policy) pages via the footer for detailed information and forms.
 
 ## Testing & quality
 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { BusSearchForm } from '../../components/common/BusSearchForm'
 import { searchBuses } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
+import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
 
 const seatingFilters = [
   { id: 'all', label: 'All seating' },
@@ -95,7 +96,7 @@ export default function BusesSearchPage() {
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-slate-900">{bus.route}</h3>
                 <p className="text-sm text-slate-500">
-                  Depart {new Date(bus.departure).toLocaleString()} · Arrive {new Date(bus.arrival).toLocaleString()}
+                  Depart {formatDateTime(bus.departure)} · Arrive {formatDateTime(bus.arrival)}
                 </p>
                 <div className="flex flex-wrap gap-2 text-xs text-slate-500">
                   <span>{bus.duration}</span>
@@ -104,7 +105,7 @@ export default function BusesSearchPage() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-semibold text-slate-900">${bus.price}</p>
+                <p className="text-2xl font-semibold text-slate-900">{formatINRCurrency(bus.price)}</p>
                 <p className="text-xs text-slate-500">per traveler</p>
                 <span className="badge mt-3 inline-flex bg-secondary/10 text-secondary">View details</span>
               </div>

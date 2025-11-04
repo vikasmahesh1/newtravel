@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { HolidaySearchForm } from '../../components/common/HolidaySearchForm'
 import { searchHolidays } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
+import { formatINRCurrency } from '../../utils/formatters'
 
 const sortOptions = [
   { id: 'price-asc', label: 'Price: Low to High' },
@@ -128,7 +129,7 @@ export default function HolidayPackagesSearchPage() {
                 </ul>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-semibold text-slate-900">${trip.pricePerPerson}</p>
+                <p className="text-2xl font-semibold text-slate-900">{formatINRCurrency(trip.pricePerPerson)}</p>
                 <p className="text-xs text-slate-500">per person</p>
                 <span className="badge mt-3 inline-flex bg-primary/10 text-primary">View itinerary</span>
               </div>

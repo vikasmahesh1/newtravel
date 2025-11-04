@@ -44,57 +44,177 @@ a {
   transform: translateY(-1px);
 }
 
-.input-date {
-  background: linear-gradient(135deg, rgba(255, 247, 242, 0.9), rgba(255, 227, 205, 0.7));
-  border: 2px solid rgba(255, 116, 51, 0.35);
-  color: #2f1b15;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  min-height: 3.25rem;
-  padding-right: 3rem;
+.date-field {
   position: relative;
-  box-shadow: 0 12px 30px rgba(255, 116, 51, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.input-date:focus {
-  box-shadow: 0 18px 40px rgba(255, 116, 51, 0.22);
+.date-field__label {
+  @apply text-xs font-semibold uppercase tracking-wide text-slate-500;
 }
 
-.input-date::-webkit-calendar-picker-indicator {
-  filter: invert(47%) sepia(86%) saturate(3167%) hue-rotate(348deg) brightness(99%) contrast(101%);
-  opacity: 0.9;
-  transform: scale(1.1);
+.date-field__button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  border-radius: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 247, 242, 0.95), rgba(255, 226, 205, 0.85));
+  border: 1px solid rgba(255, 116, 51, 0.35);
+  box-shadow: 0 14px 28px rgba(255, 116, 51, 0.18);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+  color: #7b3a18;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.input-date::-moz-focus-inner {
-  border: 0;
+.date-field__button:hover,
+.date-field__button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(255, 116, 51, 0.22);
+  outline: none;
 }
 
-.date-preview {
+.date-field__button--active {
+  background: linear-gradient(135deg, rgba(255, 233, 217, 1), rgba(255, 248, 243, 1));
+  color: #4d2410;
+}
+
+.date-field__icon {
+  font-size: 1.25rem;
+}
+
+.date-field__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+}
+
+.date-field__value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date-field__hint {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(123, 58, 24, 0.7);
+}
+
+.date-field__popover {
+  position: absolute;
+  inset: auto auto -1.5rem 0;
+  transform: translateY(100%);
+  z-index: 30;
+  margin-top: 0.75rem;
+  width: min(20rem, 100vw);
+  border-radius: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 22px 45px rgba(22, 15, 10, 0.22);
+  padding: 1rem;
+}
+
+.date-field__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.date-field__nav {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-radius: 9999px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  justify-content: center;
   background: rgba(255, 116, 51, 0.12);
-  color: rgba(191, 79, 33, 0.85);
+  color: #b5491c;
+  font-size: 1.25rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.date-field__nav:hover,
+.date-field__nav:focus-visible {
+  background: rgba(255, 116, 51, 0.18);
+  color: #7b3a18;
+  outline: none;
+}
+
+.date-field__month {
+  font-weight: 600;
+  color: #3d2016;
+}
+
+.date-field__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: rgba(123, 58, 24, 0.7);
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.date-field__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+
+.date-field__cell {
+  border-radius: 0.9rem;
+  padding: 0.6rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5b311b;
+  background: rgba(255, 246, 241, 0.9);
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-.date-preview span[aria-hidden='true'] {
-  font-size: 0.95rem;
+.date-field__cell:hover,
+.date-field__cell:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 116, 51, 0.18);
+  color: #7b3a18;
+  outline: none;
 }
 
-.date-preview--active {
-  background: linear-gradient(135deg, rgba(255, 200, 167, 0.6), rgba(255, 247, 242, 0.9));
-  color: #9b3a15;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(255, 116, 51, 0.22);
+.date-field__cell--muted {
+  color: rgba(91, 49, 27, 0.4);
+  background: rgba(255, 246, 241, 0.6);
+}
+
+.date-field__cell--today {
+  border: 1px solid rgba(255, 116, 51, 0.4);
+}
+
+.date-field__cell--selected {
+  background: linear-gradient(135deg, #ff6f3c, #ff9640);
+  color: white;
+  box-shadow: 0 12px 22px rgba(255, 116, 51, 0.3);
+}
+
+.date-field__cell--disabled,
+.date-field__cell--disabled:hover,
+.date-field__cell--disabled:focus-visible {
+  background: rgba(213, 204, 199, 0.5);
+  color: rgba(91, 49, 27, 0.4);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.date-field__selection {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(91, 49, 27, 0.9);
 }
 
 .badge {

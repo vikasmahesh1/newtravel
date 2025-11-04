@@ -2,31 +2,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { searchHolidays, updateCriteria } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
+import { DatePickerField } from './DatePickerField'
 
 const themes = [
   'Romantic retreats',
   'Culture & heritage',
   'Family adventures',
-  'Epic expeditions',
   'Wellness escapes',
+  'Adventure quests',
+  'Nature retreats',
+  'Beach escapes',
+  'Spiritual journeys',
+  'Gourmet getaways',
+  'Epic expeditions',
 ]
 
 export function HolidaySearchForm({ compact = false }) {
   const dispatch = useDispatch()
   const { criteria, status } = useSelector((state) => selectSearchDomain(state, 'holidays'))
   const [formValues, setFormValues] = useState(criteria)
-  const hasStartDate = Boolean(formValues.startDate)
-  const hasEndDate = Boolean(formValues.endDate)
-  const formattedStart = hasStartDate
-    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
-        new Date(formValues.startDate)
-      )
-    : 'Select start date'
-  const formattedEnd = hasEndDate
-    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
-        new Date(formValues.endDate)
-      )
-    : 'Select end date'
 
   useEffect(() => {
     setFormValues(criteria)
@@ -37,6 +31,20 @@ export function HolidaySearchForm({ compact = false }) {
     const numericFields = ['travelers', 'budget']
     const nextValue = numericFields.includes(name) ? Number(value) : value
     setFormValues((prev) => ({ ...prev, [name]: nextValue }))
+  }
+
+  const handleStartDateChange = (nextDate) => {
+    setFormValues((prev) => {
+      const nextState = { ...prev, startDate: nextDate }
+      if (prev.endDate && new Date(nextDate) > new Date(prev.endDate)) {
+        nextState.endDate = nextDate
+      }
+      return nextState
+    })
+  }
+
+  const handleEndDateChange = (nextDate) => {
+    setFormValues((prev) => ({ ...prev, endDate: nextDate }))
   }
 
   const handleSubmit = (event) => {
@@ -78,40 +86,22 @@ export function HolidaySearchForm({ compact = false }) {
           onChange={handleChange}
         />
       </div>
-      <div>
-        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="holiday-start">
-          Start date
-        </label>
-        <p className={`date-preview ${hasStartDate ? 'date-preview--active' : ''}`} aria-live="polite">
-          <span aria-hidden="true">📅</span>
-          {formattedStart}
-        </p>
-        <input
-          id="holiday-start"
-          type="date"
-          name="startDate"
-          className="input input-date"
-          value={formValues.startDate}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="holiday-end">
-          End date
-        </label>
-        <p className={`date-preview ${hasEndDate ? 'date-preview--active' : ''}`} aria-live="polite">
-          <span aria-hidden="true">📅</span>
-          {formattedEnd}
-        </p>
-        <input
-          id="holiday-end"
-          type="date"
-          name="endDate"
-          className="input input-date"
-          value={formValues.endDate}
-          onChange={handleChange}
-        />
-      </div>
+      <DatePickerField
+        id="holiday-start"
+        name="startDate"
+        label="Start date"
+        value={formValues.startDate}
+        min={new Date().toISOString().slice(0, 10)}
+        onChange={handleStartDateChange}
+      />
+      <DatePickerField
+        id="holiday-end"
+        name="endDate"
+        label="End date"
+        value={formValues.endDate}
+        min={formValues.startDate || new Date().toISOString().slice(0, 10)}
+        onChange={handleEndDateChange}
+      />
       <div>
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="holiday-travelers">
           Travelers
@@ -134,7 +124,7 @@ export function HolidaySearchForm({ compact = false }) {
           id="holiday-budget"
           type="number"
           min={0}
-          step={100}
+          step={1000}
           name="budget"
           className="input"
           value={formValues.budget}
