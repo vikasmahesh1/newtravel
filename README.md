@@ -61,7 +61,7 @@ src/
 ├── components/               # Shared UI components (layout, hero, cards, forms)
 ├── data/                     # Mock JSON payloads for flights, hotels, buses, and holiday packages
 ├── features/                 # Redux Toolkit slices for search and user session
-├── pages/                    # Route pages (home, search flows, auth, profile)
+├── pages/                    # Route pages (home, search flows, auth, profile, company info)
 ├── services/                 # Mock API and authentication services
 ├── store/                    # Redux store setup and selectors
 ├── styles.css                # Tailwind entry point with design tokens
@@ -74,6 +74,13 @@ Key highlights:
 - **Data services**: `services/mockApi.js` can serve static fixtures (including curated holiday packages) or forward requests to your local backend based on `VITE_USE_MOCKS`.
 - **State management**: Redux Toolkit centralizes search criteria/results (across all travel domains) and user authentication state.
 - **Accessibility & responsiveness**: Tailwind CSS powers a responsive layout with focus styles, semantic elements, and reduced motion-friendly animations.
+
+## Contact & support
+
+- **Head office**: 1st Floor, Cinema Rd, Opp. Satya Gowri Theatre, Suryanarayana Puram, Kakinada, Andhra Pradesh 533001
+- **Hyderabad branch lounge**: Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033
+- **Concierge desk**: +91 90145 67890 · **Support**: [support@vyugo.in](mailto:support@vyugo.in)
+- Explore the in-app [About](http://localhost:5173/about), [Contact](http://localhost:5173/contact), and [Cancellation Policy](http://localhost:5173/cancellation-policy) pages for detailed information and forms.
 
 ## Testing & quality
 

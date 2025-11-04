@@ -15,6 +15,18 @@ export function HolidaySearchForm({ compact = false }) {
   const dispatch = useDispatch()
   const { criteria, status } = useSelector((state) => selectSearchDomain(state, 'holidays'))
   const [formValues, setFormValues] = useState(criteria)
+  const hasStartDate = Boolean(formValues.startDate)
+  const hasEndDate = Boolean(formValues.endDate)
+  const formattedStart = hasStartDate
+    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
+        new Date(formValues.startDate)
+      )
+    : 'Select start date'
+  const formattedEnd = hasEndDate
+    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
+        new Date(formValues.endDate)
+      )
+    : 'Select end date'
 
   useEffect(() => {
     setFormValues(criteria)
@@ -70,6 +82,10 @@ export function HolidaySearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="holiday-start">
           Start date
         </label>
+        <p className={`date-preview ${hasStartDate ? 'date-preview--active' : ''}`} aria-live="polite">
+          <span aria-hidden="true">📅</span>
+          {formattedStart}
+        </p>
         <input
           id="holiday-start"
           type="date"
@@ -83,6 +99,10 @@ export function HolidaySearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="holiday-end">
           End date
         </label>
+        <p className={`date-preview ${hasEndDate ? 'date-preview--active' : ''}`} aria-live="polite">
+          <span aria-hidden="true">📅</span>
+          {formattedEnd}
+        </p>
         <input
           id="holiday-end"
           type="date"

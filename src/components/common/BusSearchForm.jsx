@@ -7,6 +7,12 @@ export function BusSearchForm({ compact = false }) {
   const dispatch = useDispatch()
   const { criteria, status } = useSelector((state) => selectSearchDomain(state, 'buses'))
   const [formValues, setFormValues] = useState(criteria)
+  const hasDateSelected = Boolean(formValues.date)
+  const formattedDate = hasDateSelected
+    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
+        new Date(formValues.date)
+      )
+    : 'Select a date'
 
   useEffect(() => {
     setFormValues(criteria)
@@ -58,6 +64,10 @@ export function BusSearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="bus-date">
           Date
         </label>
+        <p className={`date-preview ${hasDateSelected ? 'date-preview--active' : ''}`} aria-live="polite">
+          <span aria-hidden="true">📅</span>
+          {formattedDate}
+        </p>
         <input
           id="bus-date"
           type="date"

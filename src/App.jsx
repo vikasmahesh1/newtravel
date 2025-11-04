@@ -12,6 +12,9 @@ import HolidayPackageDetailsPage from './pages/holidays/HolidayPackageDetailsPag
 import LoginPage from './pages/auth/LoginPage'
 import SignupPage from './pages/auth/SignupPage'
 import ProfileDashboardPage from './pages/profile/ProfileDashboardPage'
+import AboutPage from './pages/company/AboutPage'
+import ContactPage from './pages/company/ContactPage'
+import CancellationPolicyPage from './pages/company/CancellationPolicyPage'
 
 export default function App() {
   return (
@@ -30,6 +33,9 @@ export default function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
           <Route path="profile" element={<ProfileDashboardPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="cancellation-policy" element={<CancellationPolicyPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -7,6 +7,18 @@ export function HotelSearchForm({ compact = false }) {
   const dispatch = useDispatch()
   const { criteria, status } = useSelector((state) => selectSearchDomain(state, 'hotels'))
   const [formValues, setFormValues] = useState(criteria)
+  const hasCheckIn = Boolean(formValues.checkIn)
+  const hasCheckOut = Boolean(formValues.checkOut)
+  const formattedCheckIn = hasCheckIn
+    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
+        new Date(formValues.checkIn)
+      )
+    : 'Select check-in'
+  const formattedCheckOut = hasCheckOut
+    ? new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
+        new Date(formValues.checkOut)
+      )
+    : 'Select check-out'
 
   useEffect(() => {
     setFormValues(criteria)
@@ -45,6 +57,10 @@ export function HotelSearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="check-in">
           Check-in
         </label>
+        <p className={`date-preview ${hasCheckIn ? 'date-preview--active' : ''}`} aria-live="polite">
+          <span aria-hidden="true">📅</span>
+          {formattedCheckIn}
+        </p>
         <input
           id="check-in"
           type="date"
@@ -58,6 +74,10 @@ export function HotelSearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="check-out">
           Check-out
         </label>
+        <p className={`date-preview ${hasCheckOut ? 'date-preview--active' : ''}`} aria-live="polite">
+          <span aria-hidden="true">📅</span>
+          {formattedCheckOut}
+        </p>
         <input
           id="check-out"
           type="date"
