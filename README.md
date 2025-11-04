@@ -32,6 +32,7 @@ Files of interest
 - `package.json` — scripts, dependencies, and repository metadata
 - `src/` — React source (App component, styles)
 - `ai-scripts/ask.js` — helper to send a file to the OpenAI chat API
+- `tools/ai/ask.js` — helper to send a file to the OpenAI chat API (moved to tools/ai)
 - `.vscode/extensions.json` — recommended extensions for the workspace
 - `.env.example` — template for your OpenAI key (do NOT commit real keys)
 

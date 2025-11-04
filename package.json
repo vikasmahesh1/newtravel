@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "ai:ask": "node ai-scripts/ask.js"
+  "ai:ask": "node tools/ai/ask.js"
   },
   "repository": {
     "type": "git",

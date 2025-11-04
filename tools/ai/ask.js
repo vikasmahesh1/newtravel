@@ -17,7 +17,7 @@ const fileArg = process.argv[2]
 const question = process.argv.slice(3).join(' ') || 'Please summarize this file and point out any issues.'
 
 if (!fileArg) {
-  console.error('Usage: node ai-scripts/ask.js <path-to-file> [question]')
+  console.error('Usage: node tools/ai/ask.js <path-to-file> [question]')
   process.exit(1)
 }
 
