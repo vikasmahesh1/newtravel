@@ -1,8 +1,8 @@
-# Basic React App (Vite)
+# NewTravel (Vite + React)
 
-This is a minimal React app scaffolded with Vite.
+Minimal, clean starter for the NewTravel UI. Includes a small demo, a helper script to send files to OpenAI, and workspace recommendations for AI extensions.
 
-Quickstart (PowerShell):
+Quickstart (PowerShell)
 
 ```powershell
 # 1) Install dependencies
@@ -18,15 +18,23 @@ npm run build
 npm run preview
 ```
 
-If you don't have Node.js installed, install it from https://nodejs.org/ (LTS recommended).
+AI helper
 
-Files added:
-- `package.json` — project manifest with scripts
-- `index.html` — app entry
-- `src/main.jsx` — React entry and render
-- `src/App.jsx` — example component
-- `src/styles.css` — minimal global styles
-- `.gitignore` — ignores node_modules and dist
+This repo includes a small helper script that sends a file to OpenAI and prints the assistant response.
 
-Notes:
-- This project uses Vite. The dev server runs on http://localhost:5173 by default.
+```powershell
+copy .env.example .env
+# edit .env and add OPENAI_API_KEY
+npm run ai:ask -- src/App.jsx "Please review this component and suggest improvements"
+```
+
+Files of interest
+- `package.json` — scripts, dependencies, and repository metadata
+- `src/` — React source (App component, styles)
+- `ai-scripts/ask.js` — helper to send a file to the OpenAI chat API
+- `.vscode/extensions.json` — recommended extensions for the workspace
+- `.env.example` — template for your OpenAI key (do NOT commit real keys)
+
+Notes
+- The project uses Vite — dev server runs at http://localhost:5173 by default.
+- `.env` is ignored by `.gitignore`; keep API keys out of the repo.
