@@ -33,7 +33,8 @@ Open [http://localhost:5173](http://localhost:5173) to view the app. The dev ser
 npm run build
 npm run preview
 ```
-`npm run preview` serves the optimized build locally.
+`npm run preview` serves the optimized build locally. The generated files now use relative asset
+paths, so you can also open `dist/index.html` directly when you need a quick, offline preview.
 
 ## Environment configuration
 

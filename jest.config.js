@@ -10,6 +10,10 @@ export default {
       '@swc/jest',
       {
         jsc: {
+          parser: {
+            syntax: 'ecmascript',
+            jsx: true,
+          },
           transform: {
             react: {
               runtime: 'automatic',

@@ -15,8 +15,18 @@ const parseBoolean = (value, defaultValue) => {
   return defaultValue
 }
 
+const resolveImportMetaEnv = () => {
+  try {
+    return Function('return import.meta.env')()
+  } catch (error) {
+    return undefined
+  }
+}
+
+const envSource = resolveImportMetaEnv() ?? (typeof process !== 'undefined' ? process.env : {})
+
 export const runtimeConfig = {
-  apiBaseUrl: normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL),
-  useMocks: parseBoolean(import.meta.env.VITE_USE_MOCKS, true),
-  authToken: import.meta.env.VITE_AUTH_TOKEN,
+  apiBaseUrl: normalizeBaseUrl(envSource?.VITE_API_BASE_URL),
+  useMocks: parseBoolean(envSource?.VITE_USE_MOCKS, true),
+  authToken: envSource?.VITE_AUTH_TOKEN,
 }
