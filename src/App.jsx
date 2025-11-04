@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 export default function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="app-root">
-      <header className="app-header">
-        <h1 className="app-title">NewTravel — Demo</h1>
-        <p className="app-sub">A minimal, clean React starting point — ready to extend.</p>
-      </header>
+      <Header />
 
       <main className="app-main">
         <section className="card">
@@ -38,7 +37,7 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="app-footer">© {new Date().getFullYear()} NewTravel</footer>
+      <Footer />
     </div>
   )
 }
