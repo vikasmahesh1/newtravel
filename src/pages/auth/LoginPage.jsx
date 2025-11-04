@@ -75,7 +75,7 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="text-sm text-slate-500">
-          New to NewTravel?{' '}
+          New to VyuGo Holidays?{' '}
           <Link to="/signup" className="text-secondary">
             Create an account
           </Link>

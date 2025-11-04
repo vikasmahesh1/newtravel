@@ -45,7 +45,14 @@ export function HotelSearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="check-in">
           Check-in
         </label>
-        <input id="check-in" type="date" name="checkIn" className="input" value={formValues.checkIn} onChange={handleChange} />
+        <input
+          id="check-in"
+          type="date"
+          name="checkIn"
+          className="input input-date"
+          value={formValues.checkIn}
+          onChange={handleChange}
+        />
       </div>
       <div>
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="check-out">
@@ -55,7 +62,7 @@ export function HotelSearchForm({ compact = false }) {
           id="check-out"
           type="date"
           name="checkOut"
-          className="input"
+          className="input input-date"
           value={formValues.checkOut}
           onChange={handleChange}
         />

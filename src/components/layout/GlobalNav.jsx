@@ -5,6 +5,7 @@ const navItems = [
   { label: 'Flights', to: '/flights', icon: '✈️' },
   { label: 'Hotels', to: '/hotels', icon: '🏨' },
   { label: 'Buses', to: '/buses', icon: '🚌' },
+  { label: 'Holidays', to: '/holidays', icon: '🏝️' },
   { label: 'Profile', to: '/profile', icon: '👤' },
 ]
 

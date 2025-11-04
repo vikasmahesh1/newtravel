@@ -10,5 +10,5 @@ test('renders hero headline', () => {
     </Provider>
   )
 
-  expect(screen.getByText(/Seamless bookings/i)).toBeInTheDocument()
+  expect(screen.getByText(/Signature escapes across flights/i)).toBeInTheDocument()
 })

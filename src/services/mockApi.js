@@ -1,6 +1,7 @@
 import flights from '../data/flights.js'
 import hotels from '../data/hotels.js'
 import buses from '../data/buses.js'
+import holidays from '../data/holidays.js'
 import { runtimeConfig } from './environment'
 
 const wait = (delay = 400) => new Promise((resolve) => setTimeout(resolve, delay))
@@ -56,6 +57,14 @@ const backendApi = {
     })
     return handleResponse(response)
   },
+  async searchHolidays(criteria) {
+    const response = await fetch(buildUrl('/holidays/search'), {
+      method: 'POST',
+      headers: defaultHeaders(),
+      body: JSON.stringify(criteria),
+    })
+    return handleResponse(response)
+  },
   async getFlightById(id) {
     const response = await fetch(buildUrl(`/flights/${id}`), {
       method: 'GET',
@@ -72,6 +81,13 @@ const backendApi = {
   },
   async getBusById(id) {
     const response = await fetch(buildUrl(`/buses/${id}`), {
+      method: 'GET',
+      headers: defaultHeaders(),
+    })
+    return handleResponse(response)
+  },
+  async getHolidayById(id) {
+    const response = await fetch(buildUrl(`/holidays/${id}`), {
       method: 'GET',
       headers: defaultHeaders(),
     })
@@ -115,6 +131,17 @@ const mockApiImpl = {
       return originMatch && destinationMatch
     })
   },
+  async searchHolidays(criteria) {
+    await wait()
+    return holidays.filter((packageOption) => {
+      const destinationMatch = criteria.destination
+        ? packageOption.destination.toLowerCase().includes(criteria.destination.toLowerCase())
+        : true
+      const themeMatch = criteria.theme ? packageOption.theme === criteria.theme : true
+      const budgetMatch = criteria.budget ? packageOption.pricePerPerson * criteria.travelers <= criteria.budget : true
+      return destinationMatch && themeMatch && budgetMatch
+    })
+  },
   async getFlightById(id) {
     await wait(200)
     return flights.find((flight) => flight.id === id)
@@ -126,6 +153,10 @@ const mockApiImpl = {
   async getBusById(id) {
     await wait(200)
     return buses.find((bus) => bus.id === id)
+  },
+  async getHolidayById(id) {
+    await wait(200)
+    return holidays.find((packageOption) => packageOption.id === id)
   },
 }
 

@@ -37,6 +37,18 @@ export const searchBuses = createAsyncThunk(
   }
 )
 
+export const searchHolidays = createAsyncThunk(
+  'search/holidays',
+  async (criteria, { rejectWithValue }) => {
+    try {
+      const results = await mockApi.searchHolidays(criteria)
+      return { criteria, results }
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
 const initialState = {
   flights: {
     criteria: { origin: '', destination: '', date: '', passengers: 1, cabin: 'Economy' },
@@ -52,6 +64,12 @@ const initialState = {
   },
   buses: {
     criteria: { origin: '', destination: '', date: '', passengers: 1 },
+    results: [],
+    status: 'idle',
+    error: null,
+  },
+  holidays: {
+    criteria: { theme: 'Romantic retreats', destination: '', startDate: '', endDate: '', travelers: 2, budget: 2500 },
     results: [],
     status: 'idle',
     error: null,
@@ -116,6 +134,19 @@ const searchSlice = createSlice({
       .addCase(searchBuses.rejected, (state, action) => {
         state.buses.status = 'failed'
         state.buses.error = action.payload || action.error.message
+      })
+      .addCase(searchHolidays.pending, (state) => {
+        state.holidays.status = 'loading'
+        state.holidays.error = null
+      })
+      .addCase(searchHolidays.fulfilled, (state, action) => {
+        state.holidays.status = 'succeeded'
+        state.holidays.criteria = action.payload.criteria
+        state.holidays.results = action.payload.results
+      })
+      .addCase(searchHolidays.rejected, (state, action) => {
+        state.holidays.status = 'failed'
+        state.holidays.error = action.payload || action.error.message
       })
   },
 })

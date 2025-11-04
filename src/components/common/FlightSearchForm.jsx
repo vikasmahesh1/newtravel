@@ -62,7 +62,7 @@ export function FlightSearchForm({ compact = false }) {
           id="flight-date"
           type="date"
           name="date"
-          className="input"
+          className="input input-date"
           value={formValues.date}
           onChange={handleChange}
         />

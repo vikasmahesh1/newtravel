@@ -7,19 +7,19 @@
 }
 
 body {
-  @apply bg-muted text-slate-800 font-body;
+  @apply bg-muted text-slate-900 font-body;
 }
 
 a {
-  @apply text-secondary underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2;
+  @apply text-primary underline-offset-4 transition hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2;
 }
 
 .btn-primary {
-  @apply inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-semibold text-white shadow-lg shadow-primary/30 transition hover:-translate-y-0.5 hover:bg-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  @apply inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-semibold text-white shadow-lg shadow-primary/30 transition hover:-translate-y-0.5 hover:bg-[#e34900] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center rounded-full bg-secondary px-5 py-2.5 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2;
+  @apply inline-flex items-center justify-center rounded-full bg-secondary px-5 py-2.5 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#3a2623] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60 focus-visible:ring-offset-2;
 }
 
 .card {
@@ -35,7 +35,27 @@ a {
 }
 
 .input {
-  @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40;
+  @apply w-full rounded-2xl border border-white/0 bg-white px-4 py-3 text-sm font-medium text-slate-800 shadow-sm shadow-secondary/10 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/50;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.input:focus {
+  box-shadow: 0 10px 25px rgba(255, 90, 10, 0.18);
+  transform: translateY(-1px);
+}
+
+.input-date {
+  background-image: linear-gradient(135deg, rgba(255, 116, 51, 0.12), rgba(255, 247, 242, 0.95));
+  border: 1px solid rgba(255, 90, 10, 0.35);
+  color: #2f1b15;
+}
+
+.input-date::-webkit-calendar-picker-indicator {
+  filter: invert(47%) sepia(86%) saturate(3167%) hue-rotate(348deg) brightness(99%) contrast(101%);
+}
+
+.input-date::-moz-focus-inner {
+  border: 0;
 }
 
 .badge {

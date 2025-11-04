@@ -19,5 +19,12 @@ export default [
     "description": "Daily drops on beach escapes, city breaks, and culinary adventures.",
     "cta": "See deals",
     "badge": "Daily drop"
+  },
+  {
+    "id": "PM-5004",
+    "title": "Curated Holiday Signatures",
+    "description": "Meet with a VyuGo designer to craft fully hosted holiday packages with flexible payments.",
+    "cta": "Plan with a curator",
+    "badge": "New"
   }
 ]

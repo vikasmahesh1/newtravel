@@ -2,33 +2,40 @@ import { useState } from 'react'
 import { FlightSearchForm } from './FlightSearchForm'
 import { HotelSearchForm } from './HotelSearchForm'
 import { BusSearchForm } from './BusSearchForm'
+import { HolidaySearchForm } from './HolidaySearchForm'
 
 const tabs = [
   { id: 'flights', label: 'Flights', icon: '✈️', description: 'Book multi-city, premium cabins, and more.' },
   { id: 'hotels', label: 'Hotels', icon: '🏨', description: 'Stay with curated properties and member perks.' },
   { id: 'buses', label: 'Buses', icon: '🚌', description: 'Connect regional hubs with carbon-conscious rides.' },
+  {
+    id: 'holidays',
+    label: 'Holiday packages',
+    icon: '🧳',
+    description: 'Handcrafted escapes with guides, stays, and experiences bundled for you.',
+  },
 ]
 
 export function HeroSearchPanel() {
   const [activeTab, setActiveTab] = useState('flights')
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-primary via-secondary to-accent py-20 text-white">
+    <section className="relative overflow-hidden bg-gradient-to-br from-secondary via-primary to-accent py-20 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-2 md:items-center">
         <div className="space-y-6">
-          <span className="badge bg-white/20 text-white">Design your next journey</span>
+          <span className="badge bg-white/20 text-white">VyuGo Holidays</span>
           <h1 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
-            Seamless bookings for flights, stays, and scenic rides
+            Signature escapes across flights, stays, rides, and retreats
           </h1>
           <p className="text-base text-white/80">
-            Compare flexible fares, member-exclusive rates, and curated itineraries—all in one place.
+            Compare flexible fares, member-exclusive rates, guided experiences, and curated itineraries—all in one place.
           </p>
           <div className="flex gap-3">
-            <a href="#deals" className="btn-secondary bg-white text-slate-900 hover:bg-slate-200">
-              Browse deals
+            <a href="#deals" className="btn-secondary bg-white text-secondary hover:bg-orange-100 hover:text-secondary">
+              Browse offers
             </a>
-            <a href="#popular" className="btn-primary bg-secondary hover:bg-blue-700">
-              See inspiration
+            <a href="#popular" className="btn-primary">
+              Plan a getaway
             </a>
           </div>
         </div>
@@ -57,6 +64,7 @@ export function HeroSearchPanel() {
           {activeTab === 'flights' && <FlightSearchForm />}
           {activeTab === 'hotels' && <HotelSearchForm />}
           {activeTab === 'buses' && <BusSearchForm />}
+          {activeTab === 'holidays' && <HolidaySearchForm />}
         </div>
       </div>
       <div className="pointer-events-none absolute left-1/2 top-10 hidden h-64 w-[120%] -translate-x-1/2 overflow-hidden md:block">

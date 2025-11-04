@@ -1,6 +1,6 @@
-# NewTravel — Multi-modal travel booking experience
+# VyuGo Holidays — Multi-modal travel booking experience
 
-NewTravel is a modern React application that showcases a multi-modal travel booking journey across flights, hotels, and buses. It combines shared UI patterns, centralized state management, mocked APIs, and accessibility-forward styling with Tailwind CSS.
+VyuGo Holidays is a modern React application that showcases a multi-modal travel booking journey across flights, hotels, buses, and signature holiday packages. It combines shared UI patterns, centralized state management, mocked APIs, and accessibility-forward styling with Tailwind CSS.
 
 ## Getting started
 
@@ -59,7 +59,7 @@ perform any HTTP requests. Setting the flag to `false` switches the data layer t
 src/
 ├── App.jsx                   # Route configuration and layout binding
 ├── components/               # Shared UI components (layout, hero, cards, forms)
-├── data/                     # Mock JSON payloads for flights, hotels, and buses
+├── data/                     # Mock JSON payloads for flights, hotels, buses, and holiday packages
 ├── features/                 # Redux Toolkit slices for search and user session
 ├── pages/                    # Route pages (home, search flows, auth, profile)
 ├── services/                 # Mock API and authentication services
@@ -70,9 +70,9 @@ src/
 
 Key highlights:
 - **Shared layout**: `Header`, `Footer`, and mobile `GlobalNav` ensure consistent navigation.
-- **Reusable search forms**: Flights, hotels, and buses share interaction patterns and dispatch Redux actions.
-- **Data services**: `services/mockApi.js` can serve static fixtures or forward requests to your local backend based on `VITE_USE_MOCKS`.
-- **State management**: Redux Toolkit centralizes search criteria/results and user authentication state.
+- **Reusable search forms**: Flights, hotels, buses, and holiday packages share interaction patterns and dispatch Redux actions.
+- **Data services**: `services/mockApi.js` can serve static fixtures (including curated holiday packages) or forward requests to your local backend based on `VITE_USE_MOCKS`.
+- **State management**: Redux Toolkit centralizes search criteria/results (across all travel domains) and user authentication state.
 - **Accessibility & responsiveness**: Tailwind CSS powers a responsive layout with focus styles, semantic elements, and reduced motion-friendly animations.
 
 ## Testing & quality

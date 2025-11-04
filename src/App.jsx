@@ -7,6 +7,8 @@ import HotelsSearchPage from './pages/hotels/HotelsSearchPage'
 import HotelDetailsPage from './pages/hotels/HotelDetailsPage'
 import BusesSearchPage from './pages/buses/BusesSearchPage'
 import BusDetailsPage from './pages/buses/BusDetailsPage'
+import HolidayPackagesSearchPage from './pages/holidays/HolidayPackagesSearchPage'
+import HolidayPackageDetailsPage from './pages/holidays/HolidayPackageDetailsPage'
 import LoginPage from './pages/auth/LoginPage'
 import SignupPage from './pages/auth/SignupPage'
 import ProfileDashboardPage from './pages/profile/ProfileDashboardPage'
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="hotels/:hotelId" element={<HotelDetailsPage />} />
           <Route path="buses" element={<BusesSearchPage />} />
           <Route path="buses/:busId" element={<BusDetailsPage />} />
+          <Route path="holidays" element={<HolidayPackagesSearchPage />} />
+          <Route path="holidays/:holidayId" element={<HolidayPackageDetailsPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
           <Route path="profile" element={<ProfileDashboardPage />} />

@@ -58,7 +58,14 @@ export function BusSearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="bus-date">
           Date
         </label>
-        <input id="bus-date" type="date" name="date" className="input" value={formValues.date} onChange={handleChange} />
+        <input
+          id="bus-date"
+          type="date"
+          name="date"
+          className="input input-date"
+          value={formValues.date}
+          onChange={handleChange}
+        />
       </div>
       <div>
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="bus-passengers">

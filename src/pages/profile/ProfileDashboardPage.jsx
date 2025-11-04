@@ -56,7 +56,7 @@ export default function ProfileDashboardPage() {
           <ul className="space-y-3 text-sm text-slate-600">
             <li>• Earn triple points on bundled flight + stay bookings.</li>
             <li>• Complimentary lounge passes on premium itineraries.</li>
-            <li>• Carbon offset contributions matched by NewTravel.</li>
+            <li>• Carbon offset contributions matched by VyuGo Holidays.</li>
           </ul>
           <button className="btn-secondary w-fit">View rewards</button>
         </div>

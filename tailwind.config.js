@@ -4,17 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0d9488',
-        secondary: '#1d4ed8',
-        accent: '#f97316',
-        muted: '#f8fafc',
+        primary: '#ff5a0a',
+        secondary: '#231815',
+        accent: '#ffb14f',
+        muted: '#fff7f2',
       },
       fontFamily: {
         display: ['Poppins', 'ui-sans-serif', 'system-ui'],
         body: ['Inter', 'ui-sans-serif', 'system-ui'],
       },
       boxShadow: {
-        card: '0 10px 30px rgba(15, 118, 110, 0.1)',
+        card: '0 18px 38px rgba(255, 90, 10, 0.14)',
       },
       keyframes: {
         carousel: {
