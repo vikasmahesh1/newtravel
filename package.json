@@ -12,6 +12,7 @@
     "url": "https://github.com/vikasmahesh1/newtravel.git"
   },
   "dependencies": {
+    "basic-react-app": "file:",
     "dotenv": "^16.0.0",
     "openai": "^4.10.0",
     "react": "^18.2.0",
