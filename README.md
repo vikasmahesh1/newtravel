@@ -77,6 +77,44 @@ Key highlights:
 - **State management**: Redux Toolkit centralizes search criteria/results (across all travel domains) and user authentication state.
 - **Accessibility & responsiveness**: Tailwind CSS powers a responsive layout with focus styles, semantic elements, and reduced motion-friendly animations.
 
+## Mock data contract
+
+The application deliberately ships as a frontend-only experience. Every search flow reads from deterministic fixtures whose schema is documented in [`src/data/contracts.js`](src/data/contracts.js). When you stand up a backend, mirror the `schema`, `criteria`, `items`, and `meta` structure exported for each domain:
+
+```jsonc
+{
+  "schema": "vyugo.flights.search",
+  "criteria": { "origin": "DEL", "destination": "CCU", "date": "2024-05-01", "passengers": 1, "cabin": "Economy" },
+  "items": [
+    {
+      "id": "FL-IN-1001",
+      "airline": "VyuGo Air",
+      "from": "Delhi (DEL)",
+      "to": "Kolkata (CCU)",
+      "departure": "2024-05-01T01:00:00.000Z",
+      "arrival": "2024-05-01T02:15:00.000Z",
+      "price": 3250,
+      "fareClass": "Economy Flex"
+    }
+  ],
+  "meta": {
+    "total": 120,
+    "currency": "INR",
+    "generatedAt": "2024-05-01T09:00:00.000Z",
+    "priceRange": { "min": 2800, "max": 9330 }
+  }
+}
+```
+
+Each contract exposes:
+
+- **`schema`** — a stable identifier (`vyugo.<domain>.search`) for your API routing or versioning.
+- **`criteria`** — the request payload the Redux slice keeps in state.
+- **`items`** — sample records used across the search listing and detail pages.
+- **`meta`** — summary fields (totals, ranges, filters, generation timestamp) that power UI badges and analytics.
+
+Set `VITE_USE_MOCKS=true` (already the default in `.env.example`) to keep the frontend self-contained. When your backend returns the same envelope, the application will seamlessly swap to live data without further code changes.
+
 ## Contact & support
 
 - **Head office**: 1st Floor, Cinema Rd, Opp. Satya Gowri Theatre, Suryanarayana Puram, Kakinada, Andhra Pradesh 533001

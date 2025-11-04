@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FlightSearchForm } from '../../components/common/FlightSearchForm'
+import { DataContractNote } from '../../components/common/DataContractNote'
 import { searchFlights } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
@@ -15,7 +16,9 @@ const sortOptions = [
 
 export default function FlightsSearchPage() {
   const dispatch = useDispatch()
-  const { criteria, results, status } = useSelector((state) => selectSearchDomain(state, 'flights'))
+  const { criteria, results, status, meta, schema } = useSelector((state) =>
+    selectSearchDomain(state, 'flights')
+  )
   const [selectedStops, setSelectedStops] = useState('all')
   const [sortBy, setSortBy] = useState('price-asc')
 
@@ -71,7 +74,16 @@ export default function FlightsSearchPage() {
             <h2 className="text-lg font-semibold text-slate-900">
               Showing {filteredResults.length} {filteredResults.length === 1 ? 'result' : 'results'}
             </h2>
-            <p className="text-sm text-slate-500">Departing from {criteria.origin || 'anywhere'} to {criteria.destination || 'anywhere'}.</p>
+            <p className="text-sm text-slate-500">
+              Departing from {criteria.origin || 'anywhere'} to {criteria.destination || 'anywhere'}.
+            </p>
+            {meta && (
+              <p className="mt-1 text-xs text-slate-400">
+                Sample dataset contains {meta.total} departures spanning {meta.travelDates?.start ? 'from ' : ''}
+                {meta.travelDates?.start ? formatDateTime(meta.travelDates.start) : 'today'} to{' '}
+                {meta.travelDates?.end ? formatDateTime(meta.travelDates.end) : 'the coming weeks'}.
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
@@ -133,6 +145,7 @@ export default function FlightsSearchPage() {
             </Link>
           ))}
         </div>
+        <DataContractNote schema={schema} generatedAt={meta?.generatedAt} />
       </section>
     </div>
   )

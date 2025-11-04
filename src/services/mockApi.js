@@ -2,9 +2,43 @@ import flights from '../data/flights.js'
 import hotels from '../data/hotels.js'
 import buses from '../data/buses.js'
 import holidays from '../data/holidays.js'
+import { DEFAULT_CURRENCY, SAMPLE_GENERATED_AT, SEARCH_SCHEMAS } from '../data/constants.js'
 import { runtimeConfig } from './environment'
 
 const wait = (delay = 400) => new Promise((resolve) => setTimeout(resolve, delay))
+
+const uniqueValues = (values) => Array.from(new Set(values))
+
+const computeRange = (items, accessor) => {
+  if (!items.length) return null
+  const values = items.map(accessor)
+  return {
+    min: Math.min(...values),
+    max: Math.max(...values),
+  }
+}
+
+const computeIsoRange = (items, accessor) => {
+  if (!items.length) return null
+  const timestamps = items.map((item) => new Date(accessor(item)).getTime())
+  return {
+    start: new Date(Math.min(...timestamps)).toISOString(),
+    end: new Date(Math.max(...timestamps)).toISOString(),
+  }
+}
+
+const buildSearchEnvelope = (domain, criteria, items, metaFactory = () => ({})) => ({
+  schema: SEARCH_SCHEMAS[domain],
+  criteria: { ...criteria },
+  items,
+  meta: {
+    total: items.length,
+    currency: DEFAULT_CURRENCY,
+    generatedAt: SAMPLE_GENERATED_AT,
+    source: runtimeConfig.useMocks ? 'mock-data' : 'api',
+    ...metaFactory(items),
+  },
+})
 
 const buildUrl = (path) => {
   const prefix = runtimeConfig.apiBaseUrl
@@ -98,7 +132,7 @@ const backendApi = {
 const mockApiImpl = {
   async searchFlights(criteria) {
     await wait()
-    return flights
+    const filteredFlights = flights
       .filter((flight) =>
         criteria.destination
           ? flight.to.toLowerCase().includes(criteria.destination.toLowerCase())
@@ -109,18 +143,34 @@ const mockApiImpl = {
           ? flight.from.toLowerCase().includes(criteria.origin.toLowerCase())
           : true
       )
+
+    return buildSearchEnvelope('flights', criteria, filteredFlights, (items) => ({
+      airlines: uniqueValues(items.map((item) => item.airline)),
+      fareClasses: uniqueValues(items.map((item) => item.fareClass)),
+      stopOptions: uniqueValues(items.map((item) => item.stops)).sort((a, b) => a - b),
+      priceRange: computeRange(items, (item) => item.price),
+      travelDates: computeIsoRange(items, (item) => item.departure),
+    }))
   },
   async searchHotels(criteria) {
     await wait()
-    return hotels.filter((hotel) =>
+    const filteredHotels = hotels.filter((hotel) =>
       criteria.destination
         ? hotel.location.toLowerCase().includes(criteria.destination.toLowerCase())
         : true
     )
+
+    return buildSearchEnvelope('hotels', criteria, filteredHotels, (items) => ({
+      starRatings: uniqueValues(items.map((item) => item.rating)).sort((a, b) => b - a),
+      amenityHighlights: uniqueValues(
+        items.flatMap((item) => item.amenities.slice(0, 6))
+      ).sort(),
+      priceRange: computeRange(items, (item) => item.pricePerNight),
+    }))
   },
   async searchBuses(criteria) {
     await wait()
-    return buses.filter((bus) => {
+    const filteredBuses = buses.filter((bus) => {
       const route = bus.route.toLowerCase()
       const originMatch = criteria.origin
         ? route.includes(criteria.origin.toLowerCase())
@@ -130,17 +180,32 @@ const mockApiImpl = {
         : true
       return originMatch && destinationMatch
     })
+
+    return buildSearchEnvelope('buses', criteria, filteredBuses, (items) => ({
+      operators: uniqueValues(items.map((item) => item.operator)).sort(),
+      seatingTypes: uniqueValues(items.map((item) => item.seating)).sort(),
+      priceRange: computeRange(items, (item) => item.price),
+      travelWindow: computeIsoRange(items, (item) => item.departure),
+    }))
   },
   async searchHolidays(criteria) {
     await wait()
-    return holidays.filter((packageOption) => {
+    const filteredHolidays = holidays.filter((packageOption) => {
       const destinationMatch = criteria.destination
         ? packageOption.destination.toLowerCase().includes(criteria.destination.toLowerCase())
         : true
       const themeMatch = criteria.theme ? packageOption.theme === criteria.theme : true
-      const budgetMatch = criteria.budget ? packageOption.pricePerPerson * criteria.travelers <= criteria.budget : true
+      const budgetMatch = criteria.budget
+        ? packageOption.pricePerPerson * criteria.travelers <= criteria.budget
+        : true
       return destinationMatch && themeMatch && budgetMatch
     })
+
+    return buildSearchEnvelope('holidays', criteria, filteredHolidays, (items) => ({
+      themes: uniqueValues(items.map((item) => item.theme)).sort(),
+      durations: uniqueValues(items.map((item) => item.duration)).sort(),
+      priceRange: computeRange(items, (item) => item.pricePerPerson),
+    }))
   },
   async getFlightById(id) {
     await wait(200)

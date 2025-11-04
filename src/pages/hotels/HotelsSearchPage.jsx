@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { HotelSearchForm } from '../../components/common/HotelSearchForm'
+import { DataContractNote } from '../../components/common/DataContractNote'
 import { searchHotels } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { formatINRCurrency } from '../../utils/formatters'
@@ -15,7 +16,9 @@ const ratingFilters = [
 
 export default function HotelsSearchPage() {
   const dispatch = useDispatch()
-  const { criteria, results, status } = useSelector((state) => selectSearchDomain(state, 'hotels'))
+  const { criteria, results, status, meta, schema } = useSelector((state) =>
+    selectSearchDomain(state, 'hotels')
+  )
   const [selectedRating, setSelectedRating] = useState('all')
   const [sortBy, setSortBy] = useState('price-asc')
 
@@ -67,6 +70,12 @@ export default function HotelsSearchPage() {
               {filteredResults.length} {filteredResults.length === 1 ? 'property' : 'properties'} found
             </h2>
             <p className="text-sm text-slate-500">In {criteria.destination || 'top destinations'}.</p>
+            {meta?.priceRange && (
+              <p className="mt-1 text-xs text-slate-400">
+                Sample tariff spans {formatINRCurrency(meta.priceRange.min)} –{' '}
+                {formatINRCurrency(meta.priceRange.max)} with {meta.total} curated stays.
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
@@ -122,6 +131,7 @@ export default function HotelsSearchPage() {
             </Link>
           ))}
         </div>
+        <DataContractNote schema={schema} generatedAt={meta?.generatedAt} />
       </section>
     </div>
   )

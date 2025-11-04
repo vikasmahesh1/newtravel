@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { BusSearchForm } from '../../components/common/BusSearchForm'
+import { DataContractNote } from '../../components/common/DataContractNote'
 import { searchBuses } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
@@ -15,7 +16,9 @@ const seatingFilters = [
 
 export default function BusesSearchPage() {
   const dispatch = useDispatch()
-  const { criteria, results, status } = useSelector((state) => selectSearchDomain(state, 'buses'))
+  const { criteria, results, status, meta, schema } = useSelector((state) =>
+    selectSearchDomain(state, 'buses')
+  )
   const [selectedSeating, setSelectedSeating] = useState('all')
   const [sortBy, setSortBy] = useState('price-asc')
 
@@ -66,6 +69,11 @@ export default function BusesSearchPage() {
           <div>
             <h2 className="text-lg font-semibold text-slate-900">{filteredResults.length} coach options</h2>
             <p className="text-sm text-slate-500">From {criteria.origin || 'any origin'} to {criteria.destination || 'any destination'}.</p>
+            {meta?.operators?.length ? (
+              <p className="mt-1 text-xs text-slate-400">
+                Operators represented: {meta.operators.join(', ')}.
+              </p>
+            ) : null}
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
@@ -120,6 +128,7 @@ export default function BusesSearchPage() {
             </Link>
           ))}
         </div>
+        <DataContractNote schema={schema} generatedAt={meta?.generatedAt} />
       </section>
     </div>
   )

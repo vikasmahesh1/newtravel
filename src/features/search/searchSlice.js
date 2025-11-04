@@ -1,12 +1,37 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { mockApi } from '../../services/mockApi'
+import { DEFAULT_CURRENCY, SAMPLE_GENERATED_AT, SEARCH_SCHEMAS } from '../../data/constants.js'
+
+const normaliseSearchResponse = (criteria, response, domain) => {
+  if (response && typeof response === 'object' && !Array.isArray(response)) {
+    return {
+      criteria: response.criteria ?? criteria,
+      results: response.items ?? [],
+      meta: response.meta ?? null,
+      schema: response.schema ?? SEARCH_SCHEMAS[domain],
+    }
+  }
+
+  const items = Array.isArray(response) ? response : []
+  return {
+    criteria,
+    results: items,
+    meta: {
+      total: items.length,
+      currency: DEFAULT_CURRENCY,
+      generatedAt: SAMPLE_GENERATED_AT,
+      source: 'mock-data',
+    },
+    schema: SEARCH_SCHEMAS[domain],
+  }
+}
 
 export const searchFlights = createAsyncThunk(
   'search/flights',
   async (criteria, { rejectWithValue }) => {
     try {
-      const results = await mockApi.searchFlights(criteria)
-      return { criteria, results }
+      const response = await mockApi.searchFlights(criteria)
+      return normaliseSearchResponse(criteria, response, 'flights')
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -17,8 +42,8 @@ export const searchHotels = createAsyncThunk(
   'search/hotels',
   async (criteria, { rejectWithValue }) => {
     try {
-      const results = await mockApi.searchHotels(criteria)
-      return { criteria, results }
+      const response = await mockApi.searchHotels(criteria)
+      return normaliseSearchResponse(criteria, response, 'hotels')
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -29,8 +54,8 @@ export const searchBuses = createAsyncThunk(
   'search/buses',
   async (criteria, { rejectWithValue }) => {
     try {
-      const results = await mockApi.searchBuses(criteria)
-      return { criteria, results }
+      const response = await mockApi.searchBuses(criteria)
+      return normaliseSearchResponse(criteria, response, 'buses')
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -41,8 +66,8 @@ export const searchHolidays = createAsyncThunk(
   'search/holidays',
   async (criteria, { rejectWithValue }) => {
     try {
-      const results = await mockApi.searchHolidays(criteria)
-      return { criteria, results }
+      const response = await mockApi.searchHolidays(criteria)
+      return normaliseSearchResponse(criteria, response, 'holidays')
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -53,24 +78,32 @@ const initialState = {
   flights: {
     criteria: { origin: '', destination: '', date: '', passengers: 1, cabin: 'Economy' },
     results: [],
+    meta: null,
+    schema: SEARCH_SCHEMAS.flights,
     status: 'idle',
     error: null,
   },
   hotels: {
     criteria: { destination: '', checkIn: '', checkOut: '', guests: 2, rooms: 1 },
     results: [],
+    meta: null,
+    schema: SEARCH_SCHEMAS.hotels,
     status: 'idle',
     error: null,
   },
   buses: {
     criteria: { origin: '', destination: '', date: '', passengers: 1 },
     results: [],
+    meta: null,
+    schema: SEARCH_SCHEMAS.buses,
     status: 'idle',
     error: null,
   },
   holidays: {
     criteria: { theme: 'Romantic retreats', destination: '', startDate: '', endDate: '', travelers: 2, budget: 120000 },
     results: [],
+    meta: null,
+    schema: SEARCH_SCHEMAS.holidays,
     status: 'idle',
     error: null,
   },
@@ -92,6 +125,8 @@ const searchSlice = createSlice({
       state[domain].results = []
       state[domain].status = 'idle'
       state[domain].error = null
+      state[domain].meta = null
+      state[domain].schema = SEARCH_SCHEMAS[domain]
     },
   },
   extraReducers: (builder) => {
@@ -104,6 +139,8 @@ const searchSlice = createSlice({
         state.flights.status = 'succeeded'
         state.flights.criteria = action.payload.criteria
         state.flights.results = action.payload.results
+        state.flights.meta = action.payload.meta
+        state.flights.schema = action.payload.schema
       })
       .addCase(searchFlights.rejected, (state, action) => {
         state.flights.status = 'failed'
@@ -117,6 +154,8 @@ const searchSlice = createSlice({
         state.hotels.status = 'succeeded'
         state.hotels.criteria = action.payload.criteria
         state.hotels.results = action.payload.results
+        state.hotels.meta = action.payload.meta
+        state.hotels.schema = action.payload.schema
       })
       .addCase(searchHotels.rejected, (state, action) => {
         state.hotels.status = 'failed'
@@ -130,6 +169,8 @@ const searchSlice = createSlice({
         state.buses.status = 'succeeded'
         state.buses.criteria = action.payload.criteria
         state.buses.results = action.payload.results
+        state.buses.meta = action.payload.meta
+        state.buses.schema = action.payload.schema
       })
       .addCase(searchBuses.rejected, (state, action) => {
         state.buses.status = 'failed'
@@ -143,6 +184,8 @@ const searchSlice = createSlice({
         state.holidays.status = 'succeeded'
         state.holidays.criteria = action.payload.criteria
         state.holidays.results = action.payload.results
+        state.holidays.meta = action.payload.meta
+        state.holidays.schema = action.payload.schema
       })
       .addCase(searchHolidays.rejected, (state, action) => {
         state.holidays.status = 'failed'

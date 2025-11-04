@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { HolidaySearchForm } from '../../components/common/HolidaySearchForm'
+import { DataContractNote } from '../../components/common/DataContractNote'
 import { searchHolidays } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { formatINRCurrency } from '../../utils/formatters'
@@ -15,7 +16,9 @@ const sortOptions = [
 
 export default function HolidayPackagesSearchPage() {
   const dispatch = useDispatch()
-  const { criteria, results, status } = useSelector((state) => selectSearchDomain(state, 'holidays'))
+  const { criteria, results, status, meta, schema } = useSelector((state) =>
+    selectSearchDomain(state, 'holidays')
+  )
   const [selectedTheme, setSelectedTheme] = useState('all')
   const [sortBy, setSortBy] = useState('price-asc')
 
@@ -80,6 +83,9 @@ export default function HolidayPackagesSearchPage() {
             <p className="text-sm text-slate-500">
               {criteria.destination ? `Around ${criteria.destination}` : 'Across our most-loved destinations'}.
             </p>
+            {meta?.themes?.length ? (
+              <p className="mt-1 text-xs text-slate-400">Themes available: {meta.themes.join(', ')}.</p>
+            ) : null}
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
@@ -145,6 +151,7 @@ export default function HolidayPackagesSearchPage() {
             </Link>
           ))}
         </div>
+        <DataContractNote schema={schema} generatedAt={meta?.generatedAt} />
       </section>
     </div>
   )
