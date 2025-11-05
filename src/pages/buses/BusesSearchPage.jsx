@@ -85,7 +85,11 @@ export default function BusesSearchPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Seating
-              <select className="input" value={selectedSeating} onChange={(event) => setSelectedSeating(event.target.value)}>
+            <select
+              className="input input--select"
+              value={selectedSeating}
+              onChange={(event) => setSelectedSeating(event.target.value)}
+            >
                 {seatingFilters.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
@@ -95,7 +99,11 @@ export default function BusesSearchPage() {
             </label>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Sort by
-              <select className="input" value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+            <select
+              className="input input--select"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}
+            >
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="duration">Shortest duration</option>

@@ -5,6 +5,17 @@ const users = new Map([
       password: 'password123',
       name: 'Alex Traveler',
       tier: 'Voyager Gold',
+      role: 'traveler',
+      points: 18400,
+    },
+  ],
+  [
+    'admin@vyugo.com',
+    {
+      password: 'vyugo-admin',
+      name: 'VyuGo Control',
+      tier: 'Operations Suite',
+      role: 'admin',
     },
   ],
 ])
@@ -21,6 +32,8 @@ export async function login({ email, password }) {
     email,
     name: user.name,
     tier: user.tier,
+    role: user.role,
+    points: user.points,
     token: 'mock-token',
   }
 }
@@ -30,11 +43,13 @@ export async function signUp({ email, password, name }) {
   if (users.has(email)) {
     throw new Error('Account already exists')
   }
-  users.set(email, { password, name, tier: 'Explorer' })
+  users.set(email, { password, name, tier: 'Explorer', role: 'traveler', points: 0 })
   return {
     email,
     name,
     tier: 'Explorer',
+    role: 'traveler',
+    points: 0,
     token: 'mock-token',
   }
 }
@@ -42,4 +57,12 @@ export async function signUp({ email, password, name }) {
 export async function logout() {
   await wait(150)
   return true
+}
+
+export async function loginAdmin(credentials) {
+  const profile = await login(credentials)
+  if (profile.role !== 'admin') {
+    throw new Error('Admin access required')
+  }
+  return profile
 }

@@ -87,7 +87,11 @@ export default function HotelsSearchPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Rating
-              <select className="input" value={selectedRating} onChange={(event) => setSelectedRating(event.target.value)}>
+            <select
+              className="input input--select"
+              value={selectedRating}
+              onChange={(event) => setSelectedRating(event.target.value)}
+            >
                 {ratingFilters.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
@@ -97,7 +101,11 @@ export default function HotelsSearchPage() {
             </label>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Sort by
-              <select className="input" value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+            <select
+              className="input input--select"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}
+            >
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="rating-desc">Top Rated</option>

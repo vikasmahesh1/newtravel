@@ -94,7 +94,7 @@ export default function FlightsSearchPage() {
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Stops
               <select
-                className="input"
+                className="input input--select"
                 value={selectedStops}
                 onChange={(event) => setSelectedStops(event.target.value)}
               >
@@ -105,7 +105,7 @@ export default function FlightsSearchPage() {
             </label>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Sort by
-              <select className="input" value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+              <select className="input input--select" value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
                 {sortOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}

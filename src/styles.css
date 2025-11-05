@@ -27,6 +27,12 @@ a {
   overflow: visible;
 }
 
+.card--static,
+.card--static:hover {
+  transform: none !important;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
 .section-title {
   @apply font-display text-3xl font-semibold text-slate-900 md:text-4xl;
 }
@@ -45,6 +51,15 @@ a {
   transform: translateY(-1px);
 }
 
+.input--select {
+  appearance: none;
+  padding-right: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='10' viewBox='0 0 14 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2.5L7 7.5L12 2.5' stroke='%230f172a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.85rem;
+}
+
 .date-field {
   position: relative;
   display: flex;
@@ -61,67 +76,163 @@ a {
 .date-field__button {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 0.75rem;
-  border-radius: 1.5rem;
-  padding: 0.75rem 1.25rem;
-  background: linear-gradient(135deg, rgba(255, 247, 242, 0.95), rgba(255, 226, 205, 0.85));
-  border: 1px solid rgba(255, 116, 51, 0.35);
-  box-shadow: 0 14px 28px rgba(255, 116, 51, 0.18);
-  font-size: 0.85rem;
+  justify-content: space-between;
+  gap: 1rem;
+  border-radius: 1.75rem;
+  padding: 0.9rem 1.2rem;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  font-size: 0.9rem;
   font-weight: 600;
   text-align: left;
-  color: #7b3a18;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: rgba(15, 23, 42, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
   width: 100%;
 }
 
 .date-field__button:hover,
-.date-field__button:focus-visible {
+.date-field__button:focus-visible,
+.date-field__button--open {
   transform: translateY(-1px);
-  box-shadow: 0 18px 36px rgba(255, 116, 51, 0.22);
+  box-shadow: 0 18px 36px rgba(255, 90, 10, 0.22);
+  border-color: rgba(255, 90, 10, 0.55);
   outline: none;
 }
 
-.date-field__button--active {
-  background: linear-gradient(135deg, rgba(255, 233, 217, 1), rgba(255, 248, 243, 1));
-  color: #4d2410;
+.date-field__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date-field__value--set {
+  color: #0f172a;
 }
 
 .date-field__icon {
-  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #ff5a0a, #ff9541);
+  color: #ffffff;
+  font-size: 1.3rem;
+  box-shadow: 0 12px 28px rgba(255, 90, 10, 0.3);
+  flex-shrink: 0;
 }
 
-.date-field__text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.15rem;
-  flex: 1 1 auto;
-  min-width: 0;
+.date-field__button--value {
+  color: #0f172a;
 }
 
-.date-field__value {
-  white-space: nowrap;
+.date-field__button--value .date-field__icon {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
+}
+
+.carousel {
+  @apply space-y-4;
+}
+
+.carousel__frame {
+  position: relative;
+  width: 100%;
+  border-radius: 2rem;
   overflow: hidden;
-  text-overflow: ellipsis;
+  background: radial-gradient(circle at top left, rgba(255, 237, 213, 0.35), rgba(148, 163, 184, 0.15));
+  box-shadow: 0 24px 46px rgba(15, 23, 42, 0.16);
 }
 
-@media (min-width: 768px) {
-  .date-field__button {
-    font-size: 0.95rem;
-    padding: 0.85rem 1.5rem;
-  }
-
-  .date-field__hint {
-    font-size: 0.75rem;
-  }
+.carousel__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.55s ease, transform 0.6s ease;
 }
 
-.date-field__hint {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: rgba(123, 58, 24, 0.7);
+.carousel__image--active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.carousel__control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.8);
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 600;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.carousel__control:hover,
+.carousel__control:focus-visible {
+  transform: translateY(-50%) scale(1.05);
+  background: rgba(255, 90, 10, 0.9);
+  box-shadow: 0 16px 30px rgba(255, 90, 10, 0.35);
+  outline: none;
+}
+
+.carousel__control--prev {
+  left: 1rem;
+}
+
+.carousel__control--next {
+  right: 1rem;
+}
+
+.carousel__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.carousel__dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.45);
+  border: none;
+  padding: 0;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.carousel__dot:hover,
+.carousel__dot:focus-visible {
+  transform: scale(1.25);
+  background: rgba(255, 90, 10, 0.55);
+  outline: none;
+}
+
+.carousel__dot--active {
+  width: 1.75rem;
+  background: linear-gradient(135deg, #ff5a0a, #ff9541);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__image,
+  .carousel__control,
+  .carousel__dot {
+    transition: none;
+  }
 }
 
 .date-field__popover {

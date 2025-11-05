@@ -78,7 +78,7 @@ export function HolidaySearchForm({ compact = false }) {
         <select
           id="holiday-theme"
           name="theme"
-          className="input"
+          className="input input--select"
           value={formValues.theme}
           onChange={handleChange}
         >

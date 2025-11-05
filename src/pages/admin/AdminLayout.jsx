@@ -1,4 +1,7 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAdmin } from '../../features/admin/adminSlice'
+import { selectAdminProfile, selectAdminStatus } from '../../store'
 
 const navLinks = [
   { to: '.', label: 'Overview', end: true },
@@ -9,6 +12,20 @@ const navLinks = [
 ]
 
 export default function AdminLayout({ previewMode = false }) {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const profile = useSelector(selectAdminProfile)
+  const status = useSelector(selectAdminStatus)
+
+  const handleSignOut = async () => {
+    try {
+      await dispatch(logoutAdmin()).unwrap()
+      navigate(previewMode ? '/admin/login' : '/login', { replace: true })
+    } catch (error) {
+      // noop for mock environment
+    }
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
       <div className="flex min-h-screen">
@@ -47,8 +64,14 @@ export default function AdminLayout({ previewMode = false }) {
               <p className="text-sm text-slate-500">Manage inventory, bookings, and partners powering vyugo.com.</p>
             </div>
             <div className="flex items-center gap-3">
-              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">Logged in as Admin</span>
-              <button className="btn-secondary">Sign out</button>
+              {profile ? (
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                  {profile.name}
+                </span>
+              ) : null}
+              <button className="btn-secondary" type="button" onClick={handleSignOut} disabled={status === 'loading'}>
+                {status === 'loading' ? 'Signing out…' : 'Sign out'}
+              </button>
             </div>
           </header>
           {previewMode && (

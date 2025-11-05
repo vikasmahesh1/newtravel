@@ -6,6 +6,7 @@ import { formatINRCurrency } from '../../utils/formatters'
 import { usePageMetadata } from '../../hooks/usePageMetadata'
 import { selectUserProfile } from '../../store'
 import { DatePickerField } from '../../components/common/DatePickerField'
+import { ImageCarousel } from '../../components/common/ImageCarousel'
 
 export default function HolidayPackageDetailsPage() {
   const { holidayId } = useParams()
@@ -91,19 +92,7 @@ export default function HolidayPackageDetailsPage() {
           <p className="text-sm text-slate-500">{holiday.destination}</p>
           <p className="text-sm text-slate-500">{holiday.duration} · Designed for {holiday.travelersIncluded} travelers</p>
         </div>
-        {holiday.gallery?.length ? (
-          <div className="grid gap-4 md:grid-cols-2">
-            {holiday.gallery.slice(0, 4).map((imageUrl, index) => (
-              <img
-                key={imageUrl}
-                src={imageUrl}
-                alt={`${holiday.name} experience ${index + 1}`}
-                className="h-52 w-full rounded-3xl object-cover shadow-md"
-                loading={index > 1 ? 'lazy' : 'eager'}
-              />
-            ))}
-          </div>
-        ) : null}
+        <ImageCarousel images={holiday.gallery} altPrefix={`${holiday.name} experience`} aspectClassName="aspect-[4/3]" />
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Highlights</h2>
           <ul className="mt-3 grid gap-3 text-sm text-slate-600 md:grid-cols-2">

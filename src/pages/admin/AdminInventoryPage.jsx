@@ -72,7 +72,7 @@ export default function AdminInventoryPage() {
           <label className="space-y-2 text-sm font-semibold text-slate-600">
             Market
             <select
-              className="input"
+              className="input input--select"
               value={hotelForm.market}
               onChange={(event) => setHotelForm((prev) => ({ ...prev, market: event.target.value }))}
             >
@@ -154,7 +154,7 @@ export default function AdminInventoryPage() {
           <label className="space-y-2 text-sm font-semibold text-slate-600">
             Market
             <select
-              className="input"
+              className="input input--select"
               value={holidayForm.market}
               onChange={(event) => setHolidayForm((prev) => ({ ...prev, market: event.target.value }))}
             >

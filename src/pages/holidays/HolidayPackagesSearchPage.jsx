@@ -95,7 +95,11 @@ export default function HolidayPackagesSearchPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Theme
-              <select className="input" value={selectedTheme} onChange={(event) => setSelectedTheme(event.target.value)}>
+            <select
+              className="input input--select"
+              value={selectedTheme}
+              onChange={(event) => setSelectedTheme(event.target.value)}
+            >
                 <option value="all">All</option>
                 {availableThemes.map((theme) => (
                   <option key={theme} value={theme}>
@@ -106,7 +110,11 @@ export default function HolidayPackagesSearchPage() {
             </label>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
               Sort by
-              <select className="input" value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+            <select
+              className="input input--select"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}
+            >
                 {sortOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}

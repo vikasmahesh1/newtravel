@@ -137,6 +137,7 @@ export function DatePickerField({
   const selectedDate = value ? parseIsoDate(value) : null
 
   const formattedSelection = value ? longDateFormatter.format(parseIsoDate(value)) : placeholder
+  const buttonLabel = label ? `Open calendar for ${label}` : 'Open calendar'
 
   return (
     <div className="date-field">
@@ -146,17 +147,15 @@ export function DatePickerField({
       <button
         type="button"
         ref={buttonRef}
-        className={`date-field__button ${value ? 'date-field__button--active' : ''}`}
+        className={`date-field__button ${value ? 'date-field__button--value' : ''} ${isOpen ? 'date-field__button--open' : ''}`}
         aria-haspopup="dialog"
         aria-expanded={isOpen}
+        aria-label={buttonLabel}
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span aria-hidden className="date-field__icon">
+        <span className={`date-field__value ${value ? 'date-field__value--set' : ''}`}>{formattedSelection}</span>
+        <span aria-hidden className="date-field__icon" title={placeholder}>
           📅
-        </span>
-        <span className="date-field__text">
-          <span className="date-field__value">{formattedSelection}</span>
-          <span className="date-field__hint">Tap or click to pick</span>
         </span>
       </button>
       <input id={id} name={name} type="hidden" value={value || ''} readOnly />

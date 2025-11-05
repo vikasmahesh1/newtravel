@@ -39,7 +39,7 @@ export function HeroSearchPanel() {
             </a>
           </div>
         </div>
-        <div className="card space-y-6 bg-white text-slate-900">
+        <div className="card card--static space-y-6 bg-white text-slate-900">
           <div className="flex gap-2 rounded-full bg-slate-100 p-1 text-sm font-semibold">
             {tabs.map((tab) => (
               <button

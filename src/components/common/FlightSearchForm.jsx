@@ -103,12 +103,21 @@ export function FlightSearchForm({ compact = false }) {
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="flight-cabin">
           Cabin
         </label>
-        <select id="flight-cabin" name="cabin" className="input" value={formValues.cabin} onChange={handleChange}>
+        <select
+          id="flight-cabin"
+          name="cabin"
+          className="input input--select"
+          value={formValues.cabin}
+          onChange={handleChange}
+        >
           <option>Economy</option>
           <option>Premium Economy</option>
           <option>Business</option>
           <option>First</option>
         </select>
+        <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+          Preferred cabin: {formValues.cabin}
+        </p>
       </div>
       <div className="md:col-span-2 md:flex md:items-end">
         <button type="submit" className="btn-primary w-full" disabled={status === 'loading'}>
