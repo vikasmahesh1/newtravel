@@ -23,5 +23,5 @@ export default {
       },
     ],
   },
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '<rootDir>/backend/'],
 }

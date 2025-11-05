@@ -22,6 +22,10 @@ an API listening at `http://127.0.0.1:4000`, which can be overridden through env
 variables. When a backend is unavailable you can keep working with the built-in mock data layer—no
 network connectivity is required.
 
+This repository now ships with a full-featured API scaffold under [`backend/`](backend/README.md)
+implemented with Express, Prisma, and PostgreSQL. Follow the backend README to install
+dependencies, run database migrations, and start the server alongside the Vite dev server.
+
 ### Running the development server
 ```bash
 npm run dev
@@ -73,7 +77,7 @@ Key highlights:
 - **Reusable search forms**: Flights, hotels, buses, and holiday packages share interaction patterns and dispatch Redux actions.
 - **Intuitive date picking**: A bespoke calendar popover enhances all search flows with tap-friendly, accessible date selection.
 - **India-first datasets**: Mock data now mirrors 100+ real-world Indian routes, stays, and packages for lifelike search results.
-- **Data services**: `services/mockApi.js` can serve static fixtures (including curated holiday packages) or forward requests to your local backend based on `VITE_USE_MOCKS`.
+- **Data services**: `services/mockApi.js` can serve static fixtures (including curated holiday packages) or forward requests to your local backend based on `VITE_USE_MOCKS`. Authentication calls in `services/authService.js` automatically reuse the same configuration.
 - **State management**: Redux Toolkit centralizes search criteria/results (across all travel domains) and user authentication state.
 - **Accessibility & responsiveness**: Tailwind CSS powers a responsive layout with focus styles, semantic elements, and reduced motion-friendly animations.
 
