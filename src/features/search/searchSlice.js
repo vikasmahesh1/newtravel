@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { mockApi } from '../../services/mockApi'
+import { apiClient } from '../../services/apiClient'
 import { DEFAULT_CURRENCY, SAMPLE_GENERATED_AT, SEARCH_SCHEMAS } from '../../data/constants.js'
 
 const normaliseSearchResponse = (criteria, response, domain) => {
@@ -20,7 +20,7 @@ const normaliseSearchResponse = (criteria, response, domain) => {
       total: items.length,
       currency: DEFAULT_CURRENCY,
       generatedAt: SAMPLE_GENERATED_AT,
-      source: 'mock-data',
+      source: 'api',
     },
     schema: SEARCH_SCHEMAS[domain],
   }
@@ -30,7 +30,7 @@ export const searchFlights = createAsyncThunk(
   'search/flights',
   async (criteria, { rejectWithValue }) => {
     try {
-      const response = await mockApi.searchFlights(criteria)
+      const response = await apiClient.searchFlights(criteria)
       return normaliseSearchResponse(criteria, response, 'flights')
     } catch (error) {
       return rejectWithValue(error.message)
@@ -42,7 +42,7 @@ export const searchHotels = createAsyncThunk(
   'search/hotels',
   async (criteria, { rejectWithValue }) => {
     try {
-      const response = await mockApi.searchHotels(criteria)
+      const response = await apiClient.searchHotels(criteria)
       return normaliseSearchResponse(criteria, response, 'hotels')
     } catch (error) {
       return rejectWithValue(error.message)
@@ -54,7 +54,7 @@ export const searchBuses = createAsyncThunk(
   'search/buses',
   async (criteria, { rejectWithValue }) => {
     try {
-      const response = await mockApi.searchBuses(criteria)
+      const response = await apiClient.searchBuses(criteria)
       return normaliseSearchResponse(criteria, response, 'buses')
     } catch (error) {
       return rejectWithValue(error.message)
@@ -66,7 +66,7 @@ export const searchHolidays = createAsyncThunk(
   'search/holidays',
   async (criteria, { rejectWithValue }) => {
     try {
-      const response = await mockApi.searchHolidays(criteria)
+      const response = await apiClient.searchHolidays(criteria)
       return normaliseSearchResponse(criteria, response, 'holidays')
     } catch (error) {
       return rejectWithValue(error.message)

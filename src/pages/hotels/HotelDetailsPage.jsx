@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { mockApi } from '../../services/mockApi'
+import { apiClient } from '../../services/apiClient'
 import { formatINRCurrency } from '../../utils/formatters'
 import { usePageMetadata } from '../../hooks/usePageMetadata'
 import { selectUserProfile } from '../../store'
@@ -17,7 +17,7 @@ export default function HotelDetailsPage() {
   useEffect(() => {
     async function loadHotel() {
       try {
-        const data = await mockApi.getHotelById(hotelId)
+        const data = await apiClient.getHotelById(hotelId)
         setHotel(data)
         setStatus('succeeded')
       } catch (error) {

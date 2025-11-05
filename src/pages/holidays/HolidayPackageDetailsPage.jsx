@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { mockApi } from '../../services/mockApi'
+import { apiClient } from '../../services/apiClient'
 import { formatINRCurrency } from '../../utils/formatters'
 import { usePageMetadata } from '../../hooks/usePageMetadata'
 import { selectUserProfile } from '../../store'
@@ -19,7 +19,7 @@ export default function HolidayPackageDetailsPage() {
   useEffect(() => {
     async function loadHoliday() {
       try {
-        const data = await mockApi.getHolidayById(holidayId)
+        const data = await apiClient.getHolidayById(holidayId)
         setHoliday(data)
         setStatus('succeeded')
       } catch (error) {

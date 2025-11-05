@@ -67,4 +67,4 @@ npm run lint
 | POST | `/auth/logout` | Logout (stateless) |
 | POST | `/auth/admin/login` | Admin login |
 
-Set `VITE_API_BASE_URL=http://127.0.0.1:4000` and `VITE_USE_MOCKS=false` in the frontend to consume these endpoints.
+Set `VITE_API_BASE_URL=http://127.0.0.1:4000` in the frontend to consume these endpoints.

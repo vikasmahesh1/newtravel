@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { mockApi } from '../../services/mockApi'
+import { apiClient } from '../../services/apiClient'
 import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
 import { usePageMetadata } from '../../hooks/usePageMetadata'
 import { selectUserProfile } from '../../store'
@@ -16,7 +16,7 @@ export default function BusDetailsPage() {
   useEffect(() => {
     async function loadBus() {
       try {
-        const data = await mockApi.getBusById(busId)
+        const data = await apiClient.getBusById(busId)
         setBus(data)
         setStatus('succeeded')
       } catch (error) {

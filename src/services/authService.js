@@ -1,29 +1,5 @@
 import { runtimeConfig } from './environment'
 
-const users = new Map([
-  [
-    'traveler@example.com',
-    {
-      password: 'password123',
-      name: 'Alex Traveler',
-      tier: 'Voyager Gold',
-      role: 'traveler',
-      points: 18400,
-    },
-  ],
-  [
-    'admin@vyugo.com',
-    {
-      password: 'vyugo-admin',
-      name: 'VyuGo Control',
-      tier: 'Operations Suite',
-      role: 'admin',
-    },
-  ],
-])
-
-const wait = (delay = 350) => new Promise((resolve) => setTimeout(resolve, delay))
-
 const buildUrl = (path) => {
   const prefix = runtimeConfig.apiBaseUrl
   if (!path.startsWith('/')) {
@@ -93,67 +69,17 @@ const backendAuth = {
 }
 
 export async function login({ email, password }) {
-  if (!runtimeConfig.useMocks) {
-    return backendAuth.login({ email, password })
-  }
-
-  await wait()
-  const user = users.get(email)
-  if (!user || user.password !== password) {
-    throw new Error('Invalid email or password')
-  }
-  const profile = {
-    email,
-    name: user.name,
-    tier: user.tier,
-    role: user.role,
-    points: user.points,
-    token: 'mock-token',
-  }
-  runtimeConfig.authToken = profile.token
-  return profile
+  return backendAuth.login({ email, password })
 }
 
 export async function signUp({ email, password, name }) {
-  if (!runtimeConfig.useMocks) {
-    return backendAuth.signUp({ email, password, name })
-  }
-
-  await wait()
-  if (users.has(email)) {
-    throw new Error('Account already exists')
-  }
-  const profile = {
-    email,
-    name,
-    tier: 'Explorer',
-    role: 'traveler',
-    points: 0,
-    token: 'mock-token',
-  }
-  users.set(email, { password, name, tier: profile.tier, role: profile.role, points: profile.points })
-  runtimeConfig.authToken = profile.token
-  return profile
+  return backendAuth.signUp({ email, password, name })
 }
 
 export async function logout() {
-  if (!runtimeConfig.useMocks) {
-    return backendAuth.logout()
-  }
-
-  await wait(150)
-  runtimeConfig.authToken = null
-  return true
+  return backendAuth.logout()
 }
 
 export async function loginAdmin(credentials) {
-  if (!runtimeConfig.useMocks) {
-    return backendAuth.loginAdmin(credentials)
-  }
-
-  const profile = await login(credentials)
-  if (profile.role !== 'admin') {
-    throw new Error('Admin access required')
-  }
-  return profile
+  return backendAuth.loginAdmin(credentials)
 }

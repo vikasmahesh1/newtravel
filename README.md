@@ -1,6 +1,6 @@
 # VyuGo Holidays — Multi-modal travel booking experience
 
-VyuGo Holidays is a modern React application that showcases a multi-modal travel booking journey across flights, hotels, buses, and signature holiday packages. It combines shared UI patterns, centralized state management, mocked APIs, and accessibility-forward styling with Tailwind CSS.
+VyuGo Holidays is a modern React application that showcases a multi-modal travel booking journey across flights, hotels, buses, and signature holiday packages. It combines shared UI patterns, centralized state management, live APIs, and accessibility-forward styling with Tailwind CSS.
 
 ## Getting started
 
@@ -17,14 +17,16 @@ If you are working offline or behind a proxy, configure npm's registry prior to 
 
 ### Backend expectations
 
-The UI is designed to talk to a locally running backend during development. By default it expects
-an API listening at `http://127.0.0.1:4000`, which can be overridden through environment
-variables. When a backend is unavailable you can keep working with the built-in mock data layer—no
-network connectivity is required.
+The UI is designed to talk to the production-ready backend that lives under
+[`backend/`](backend/README.md). By default it expects an API listening at
+`http://127.0.0.1:4000`, which can be overridden through environment variables. Start the backend
+before running the Vite dev server so every search and detail page can resolve data directly from
+the database.
 
-This repository now ships with a full-featured API scaffold under [`backend/`](backend/README.md)
-implemented with Express, Prisma, and PostgreSQL. Follow the backend README to install
-dependencies, run database migrations, and start the server alongside the Vite dev server.
+The backend is implemented with Express, Prisma, and MySQL and can connect either to a local
+instance or to the hosted database you shared. Follow the backend README to install dependencies,
+configure the connection string, run database migrations, and start the server alongside the Vite
+dev server.
 
 ### Running the development server
 ```bash
@@ -51,11 +53,10 @@ cp .env.example .env
 | --- | --- |
 | `VITE_API_BASE_URL` | Base URL for your locally running backend. Defaults to `http://127.0.0.1:4000`. |
 | `VITE_AUTH_TOKEN` | Example token or API key for authenticated requests. |
-| `VITE_USE_MOCKS` | Set to `false` to hit the local backend instead of mock data. |
 
-If `VITE_USE_MOCKS=true` (the default), the app serves data from static JSON fixtures and does not
-perform any HTTP requests. Setting the flag to `false` switches the data layer to the backend using
-`VITE_API_BASE_URL`.
+All searches and detail pages call the backend directly. Ensure the API is reachable at
+`VITE_API_BASE_URL` (the default `http://127.0.0.1:4000` works for local development) before
+opening the frontend.
 
 ## Project structure
 
@@ -63,10 +64,10 @@ perform any HTTP requests. Setting the flag to `false` switches the data layer t
 src/
 ├── App.jsx                   # Route configuration and layout binding
 ├── components/               # Shared UI components (layout, hero, cards, forms)
-├── data/                     # Mock JSON payloads for flights, hotels, buses, and holiday packages
+├── data/                     # Sample JSON payloads used for seeding and offline previews
 ├── features/                 # Redux Toolkit slices for search and user session
 ├── pages/                    # Route pages (home, search flows, auth, profile, company info)
-├── services/                 # Mock API and authentication services
+├── services/                 # API client and authentication services
 ├── store/                    # Redux store setup and selectors
 ├── styles.css                # Tailwind entry point with design tokens
 └── __tests__/                # React Testing Library suites
@@ -76,14 +77,14 @@ Key highlights:
 - **Shared layout**: `Header`, `Footer`, and mobile `GlobalNav` ensure consistent navigation.
 - **Reusable search forms**: Flights, hotels, buses, and holiday packages share interaction patterns and dispatch Redux actions.
 - **Intuitive date picking**: A bespoke calendar popover enhances all search flows with tap-friendly, accessible date selection.
-- **India-first datasets**: Mock data now mirrors 100+ real-world Indian routes, stays, and packages for lifelike search results.
-- **Data services**: `services/mockApi.js` can serve static fixtures (including curated holiday packages) or forward requests to your local backend based on `VITE_USE_MOCKS`. Authentication calls in `services/authService.js` automatically reuse the same configuration.
+- **India-first datasets**: Seed data mirrors 100+ real-world Indian routes, stays, and packages for lifelike search results and is loaded straight into MySQL.
+- **Data services**: `services/apiClient.js` centralizes every REST call to the backend, while `services/authService.js` forwards authentication flows using the same configuration.
 - **State management**: Redux Toolkit centralizes search criteria/results (across all travel domains) and user authentication state.
 - **Accessibility & responsiveness**: Tailwind CSS powers a responsive layout with focus styles, semantic elements, and reduced motion-friendly animations.
 
-## Mock data contract
+## API contract
 
-The application deliberately ships as a frontend-only experience. Every search flow reads from deterministic fixtures whose schema is documented in [`src/data/contracts.js`](src/data/contracts.js). When you stand up a backend, mirror the `schema`, `criteria`, `items`, and `meta` structure exported for each domain:
+The backend surfaces deterministic responses across every travel domain. The JSON envelope matches the schemas documented in [`src/data/contracts.js`](src/data/contracts.js), ensuring the frontend can render search results and detail pages without additional adapters:
 
 ```jsonc
 {
@@ -117,7 +118,7 @@ Each contract exposes:
 - **`items`** — sample records used across the search listing and detail pages.
 - **`meta`** — summary fields (totals, ranges, filters, generation timestamp) that power UI badges and analytics.
 
-Set `VITE_USE_MOCKS=true` (already the default in `.env.example`) to keep the frontend self-contained. When your backend returns the same envelope, the application will seamlessly swap to live data without further code changes.
+The Express services already emit the envelope above, so the React application consumes live data with no additional configuration.
 
 ## Contact & support
 

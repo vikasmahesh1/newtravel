@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { mockApi } from '../../services/mockApi'
+import { apiClient } from '../../services/apiClient'
 import { formatDateTime, formatINRCurrency } from '../../utils/formatters'
 import { usePageMetadata } from '../../hooks/usePageMetadata'
 import { selectUserProfile } from '../../store'
@@ -16,7 +16,7 @@ export default function FlightDetailsPage() {
   useEffect(() => {
     async function loadFlight() {
       try {
-        const data = await mockApi.getFlightById(flightId)
+        const data = await apiClient.getFlightById(flightId)
         setFlight(data)
         setStatus('succeeded')
       } catch (error) {

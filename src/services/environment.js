@@ -5,16 +5,6 @@ const normalizeBaseUrl = (value) => {
   return trimmed.endsWith('/') ? trimmed.slice(0, -1) : trimmed
 }
 
-const parseBoolean = (value, defaultValue) => {
-  if (value === undefined || value === null || value === '') {
-    return defaultValue
-  }
-  const normalized = String(value).trim().toLowerCase()
-  if (['true', '1', 'yes', 'on'].includes(normalized)) return true
-  if (['false', '0', 'no', 'off'].includes(normalized)) return false
-  return defaultValue
-}
-
 const resolveImportMetaEnv = () => {
   try {
     return Function('return import.meta.env')()
@@ -27,6 +17,5 @@ const envSource = resolveImportMetaEnv() ?? (typeof process !== 'undefined' ? pr
 
 export const runtimeConfig = {
   apiBaseUrl: normalizeBaseUrl(envSource?.VITE_API_BASE_URL),
-  useMocks: parseBoolean(envSource?.VITE_USE_MOCKS, true),
   authToken: envSource?.VITE_AUTH_TOKEN,
 }
