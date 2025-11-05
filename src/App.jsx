@@ -16,11 +16,28 @@ import AboutPage from './pages/company/AboutPage'
 import ContactPage from './pages/company/ContactPage'
 import CancellationPolicyPage from './pages/company/CancellationPolicyPage'
 import PaymentGatewayPage from './pages/payments/PaymentGatewayPage'
+import AdminApp from './pages/admin/AdminApp'
 
 export default function App() {
+  const isBrowser = typeof window !== 'undefined'
+  const hostname = isBrowser ? window.location.hostname : ''
+  const pathname = isBrowser ? window.location.pathname : ''
+  const isAdminHost = hostname.startsWith('admin.') || hostname === 'admin.vyugo.com'
+
+  if (isAdminHost) {
+    return (
+      <BrowserRouter>
+        <AdminApp />
+      </BrowserRouter>
+    )
+  }
+
+  const previewMode = pathname.startsWith('/admin')
+
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/admin/*" element={<AdminApp previewMode={previewMode} />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="flights" element={<FlightsSearchPage />} />

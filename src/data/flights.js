@@ -1,4 +1,4 @@
-const cityMatrix = [
+const domesticCityMatrix = [
   { city: 'Delhi', code: 'DEL' },
   { city: 'Mumbai', code: 'BOM' },
   { city: 'Bengaluru', code: 'BLR' },
@@ -11,6 +11,19 @@ const cityMatrix = [
   { city: 'Jaipur', code: 'JAI' },
   { city: 'Lucknow', code: 'LKO' },
   { city: 'Kochi', code: 'COK' },
+]
+
+const internationalDestinations = [
+  { city: 'Singapore', code: 'SIN', region: 'Singapore' },
+  { city: 'Dubai', code: 'DXB', region: 'UAE' },
+  { city: 'Bangkok', code: 'BKK', region: 'Thailand' },
+  { city: 'London', code: 'LHR', region: 'United Kingdom' },
+  { city: 'New York', code: 'JFK', region: 'USA' },
+  { city: 'Sydney', code: 'SYD', region: 'Australia' },
+  { city: 'Paris', code: 'CDG', region: 'France' },
+  { city: 'Tokyo', code: 'HND', region: 'Japan' },
+  { city: 'Toronto', code: 'YYZ', region: 'Canada' },
+  { city: 'Johannesburg', code: 'JNB', region: 'South Africa' },
 ]
 
 const airlines = [
@@ -35,42 +48,51 @@ const minutesToDuration = (minutes) => {
 
 const baseDate = new Date(Date.UTC(2024, 4, 1, 1, 0))
 
-const flights = Array.from({ length: 120 }, (_, index) => {
-  const origin = cityMatrix[index % cityMatrix.length]
-  let destination = cityMatrix[(index * 3 + 5) % cityMatrix.length]
-  if (destination.code === origin.code) {
-    destination = cityMatrix[(index * 5 + 7) % cityMatrix.length]
+const flights = Array.from({ length: 160 }, (_, index) => {
+  const isInternational = index % 4 === 0
+  const origin = domesticCityMatrix[index % domesticCityMatrix.length]
+  let destination
+  if (isInternational) {
+    destination = internationalDestinations[(index * 3) % internationalDestinations.length]
+  } else {
+    destination = domesticCityMatrix[(index * 3 + 5) % domesticCityMatrix.length]
+    if (destination.code === origin.code) {
+      destination = domesticCityMatrix[(index * 5 + 7) % domesticCityMatrix.length]
+    }
   }
 
   const departure = new Date(baseDate)
-  departure.setUTCDate(baseDate.getUTCDate() + Math.floor(index / cityMatrix.length))
+  departure.setUTCDate(baseDate.getUTCDate() + Math.floor(index / domesticCityMatrix.length))
   departure.setUTCHours(1 + (index % 15), (index % 2) * 30)
 
   const duration = durationOptions[index % durationOptions.length]
   const arrival = new Date(departure)
-  arrival.setUTCMinutes(arrival.getUTCMinutes() + duration)
+  const durationBuffer = Math.round(isInternational ? duration * 1.8 : duration)
+  arrival.setUTCMinutes(arrival.getUTCMinutes() + durationBuffer)
 
   const stops = stopPattern[index % stopPattern.length]
   const basePrice = 2800 + (index % 20) * 320
   const nonstopBonus = stops === 0 ? 450 : 0
-  const price = basePrice + nonstopBonus
+  const price = Math.round((isInternational ? basePrice * 2.8 : basePrice) + nonstopBonus)
 
   const amenities = Array.from({ length: 3 }, (_, amenityIndex) =>
     amenitiesPool[(index + amenityIndex) % amenitiesPool.length]
   )
 
   return {
-    id: `FL-IN-${1001 + index}`,
+    id: `${isInternational ? 'FL-INT' : 'FL-IN'}-${1001 + index}`,
     airline: airlines[index % airlines.length],
     from: `${origin.city} (${origin.code})`,
     to: `${destination.city} (${destination.code})`,
     departure: departure.toISOString(),
     arrival: arrival.toISOString(),
-    duration: minutesToDuration(duration),
+    duration: minutesToDuration(durationBuffer),
     stops,
     price,
     fareClass: fareClasses[(index + stops) % fareClasses.length],
     amenities,
+    market: isInternational ? 'International' : 'Domestic',
+    region: isInternational ? destination.region : 'India',
   }
 })
 

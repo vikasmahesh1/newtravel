@@ -83,11 +83,27 @@ export default function HolidayPackageDetailsPage() {
     <div className="mx-auto max-w-4xl px-6 py-12">
       <div className="card space-y-6">
         <div className="flex flex-col gap-2">
-          <span className="badge">{holiday.theme}</span>
+          <div className="flex flex-wrap gap-2">
+            <span className="badge">{holiday.theme}</span>
+            <span className="badge bg-primary/10 text-primary">{holiday.market}</span>
+          </div>
           <h1 className="text-3xl font-semibold text-slate-900">{holiday.name}</h1>
           <p className="text-sm text-slate-500">{holiday.destination}</p>
           <p className="text-sm text-slate-500">{holiday.duration} · Designed for {holiday.travelersIncluded} travelers</p>
         </div>
+        {holiday.gallery?.length ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            {holiday.gallery.slice(0, 4).map((imageUrl, index) => (
+              <img
+                key={imageUrl}
+                src={imageUrl}
+                alt={`${holiday.name} experience ${index + 1}`}
+                className="h-52 w-full rounded-3xl object-cover shadow-md"
+                loading={index > 1 ? 'lazy' : 'eager'}
+              />
+            ))}
+          </div>
+        ) : null}
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Highlights</h2>
           <ul className="mt-3 grid gap-3 text-sm text-slate-600 md:grid-cols-2">

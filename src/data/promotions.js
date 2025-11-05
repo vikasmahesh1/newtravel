@@ -1,30 +1,50 @@
 export default [
   {
-    "id": "PM-5001",
-    "title": "Fly + Stay Savings",
-    "description": "Bundle flights and hotels to save up to 25% on curated itineraries.",
-    "cta": "Explore bundles",
-    "badge": "Limited time"
+    id: 'PM-5001',
+    title: 'Fly + Stay Savings',
+    description: 'Bundle flights and hotels to save up to 25% on curated itineraries.',
+    cta: 'Explore bundles',
+    badge: 'Limited time',
+    market: 'Domestic',
   },
   {
-    "id": "PM-5002",
-    "title": "Members earn 3x points",
-    "description": "Join Voyager Rewards and unlock lounge access plus bonus points.",
-    "cta": "Join rewards",
-    "badge": "Member perk"
+    id: 'PM-5002',
+    title: 'Members earn 3x points',
+    description: 'Join Voyager Rewards and unlock lounge access plus bonus points.',
+    cta: 'Join rewards',
+    badge: 'Member perk',
+    market: 'Domestic',
   },
   {
-    "id": "PM-5003",
-    "title": "Summer Flash Deals",
-    "description": "Daily drops on beach escapes, city breaks, and culinary adventures.",
-    "cta": "See deals",
-    "badge": "Daily drop"
+    id: 'PM-5003',
+    title: 'Summer Flash Deals',
+    description: 'Daily drops on beach escapes, city breaks, and culinary adventures.',
+    cta: 'See deals',
+    badge: 'Daily drop',
+    market: 'International',
   },
   {
-    "id": "PM-5004",
-    "title": "Curated Holiday Signatures",
-    "description": "Meet with a VyuGo designer to craft fully hosted holiday packages with flexible payments.",
-    "cta": "Plan with a curator",
-    "badge": "New"
-  }
+    id: 'PM-5004',
+    title: 'Curated Holiday Signatures',
+    description: 'Meet with a VyuGo designer to craft fully hosted holiday packages with flexible payments.',
+    cta: 'Plan with a curator',
+    badge: 'New',
+    market: 'International',
+  },
+  {
+    id: 'PM-5005',
+    title: 'Festive India Collections',
+    description: 'Reserve Durga Puja, Onam, and Diwali experiences with priority access.',
+    cta: 'Book festival trips',
+    badge: 'Seasonal',
+    market: 'Domestic',
+  },
+  {
+    id: 'PM-5006',
+    title: 'Global Explorer Upgrades',
+    description: 'Complimentary lounge and chauffeur services on long-haul premium cabins.',
+    cta: 'Unlock upgrades',
+    badge: 'Voyager tier',
+    market: 'International',
+  },
 ]

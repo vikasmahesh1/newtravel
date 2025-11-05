@@ -1,4 +1,4 @@
-const destinations = [
+const domesticDestinations = [
   { city: 'Udaipur', state: 'Rajasthan' },
   { city: 'Kumarakom', state: 'Kerala' },
   { city: 'Gangtok', state: 'Sikkim' },
@@ -11,6 +11,19 @@ const destinations = [
   { city: 'Leh', state: 'Ladakh' },
   { city: 'Jaisalmer', state: 'Rajasthan' },
   { city: 'Kodaikanal', state: 'Tamil Nadu' },
+]
+
+const internationalDestinations = [
+  { city: 'Bali', state: 'Indonesia' },
+  { city: 'Phuket', state: 'Thailand' },
+  { city: 'Kyoto', state: 'Japan' },
+  { city: 'Lucerne', state: 'Switzerland' },
+  { city: 'Santorini', state: 'Greece' },
+  { city: 'Queenstown', state: 'New Zealand' },
+  { city: 'Dubai', state: 'UAE' },
+  { city: 'Doha', state: 'Qatar' },
+  { city: 'Cape Town', state: 'South Africa' },
+  { city: 'Reykjavík', state: 'Iceland' },
 ]
 
 const propertyStyles = ['Retreat', 'Haveli', 'Boutique', 'Palace', 'Residency', 'Sanctuary']
@@ -29,7 +42,9 @@ const amenitiesPool = [
 ]
 
 const hotels = Array.from({ length: 120 }, (_, index) => {
-  const destination = destinations[index % destinations.length]
+  const isInternational = index % 6 === 0
+  const destinationPool = isInternational ? internationalDestinations : domesticDestinations
+  const destination = destinationPool[index % destinationPool.length]
   const descriptor = descriptors[index % descriptors.length]
   const propertyStyle = propertyStyles[index % propertyStyles.length]
   const basePrice = 4200 + (index % 24) * 380
@@ -37,15 +52,20 @@ const hotels = Array.from({ length: 120 }, (_, index) => {
   const amenities = Array.from({ length: 4 }, (_, amenityIndex) =>
     amenitiesPool[(index + amenityIndex) % amenitiesPool.length]
   )
+  const gallery = Array.from({ length: 4 }, (_, imageIndex) =>
+    `https://images.vyugo.in/hotels/${isInternational ? 'intl' : 'in'}/${2001 + index}-${imageIndex + 1}.jpg`
+  )
 
   return {
-    id: `HT-IN-${2001 + index}`,
+    id: `${isInternational ? 'HT-INT' : 'HT-IN'}-${2001 + index}`,
     name: `${descriptor} ${destination.city} ${propertyStyle}`,
     location: `${destination.city}, ${destination.state}`,
-    pricePerNight: basePrice,
+    pricePerNight: isInternational ? Math.round(basePrice * 1.55) : basePrice,
     rating,
     amenities,
-    images: [`https://images.vyugo.in/hotels/${2001 + index}.jpg`],
+    market: isInternational ? 'International' : 'Domestic',
+    images: gallery,
+    gallery,
     description: `Escape to ${destination.city} with bespoke experiences curated by VyuGo concierges, blending local culture with modern indulgence.`,
   }
 })

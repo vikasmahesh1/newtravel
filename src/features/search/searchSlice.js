@@ -76,7 +76,7 @@ export const searchHolidays = createAsyncThunk(
 
 const initialState = {
   flights: {
-    criteria: { origin: '', destination: '', date: '', passengers: 1, cabin: 'Economy' },
+    criteria: { origin: '', destination: '', date: '', passengers: 1, cabin: 'Economy', market: 'Domestic' },
     results: [],
     meta: null,
     schema: SEARCH_SCHEMAS.flights,
@@ -84,7 +84,7 @@ const initialState = {
     error: null,
   },
   hotels: {
-    criteria: { destination: '', checkIn: '', checkOut: '', guests: 2, rooms: 1 },
+    criteria: { destination: '', checkIn: '', checkOut: '', guests: 2, rooms: 1, market: 'Domestic' },
     results: [],
     meta: null,
     schema: SEARCH_SCHEMAS.hotels,
@@ -92,7 +92,7 @@ const initialState = {
     error: null,
   },
   buses: {
-    criteria: { origin: '', destination: '', date: '', passengers: 1 },
+    criteria: { origin: '', destination: '', date: '', passengers: 1, market: 'Domestic' },
     results: [],
     meta: null,
     schema: SEARCH_SCHEMAS.buses,
@@ -100,7 +100,15 @@ const initialState = {
     error: null,
   },
   holidays: {
-    criteria: { theme: 'Romantic retreats', destination: '', startDate: '', endDate: '', travelers: 2, budget: 120000 },
+    criteria: {
+      theme: 'Romantic retreats',
+      destination: '',
+      startDate: '',
+      endDate: '',
+      travelers: 2,
+      budget: 120000,
+      market: 'Domestic',
+    },
     results: [],
     meta: null,
     schema: SEARCH_SCHEMAS.holidays,

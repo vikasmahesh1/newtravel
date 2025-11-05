@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { searchHotels, updateCriteria } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { DatePickerField } from './DatePickerField'
+import { MarketSelector } from './MarketSelector'
 
 export function HotelSearchForm({ compact = false }) {
   const dispatch = useDispatch()
@@ -34,6 +35,10 @@ export function HotelSearchForm({ compact = false }) {
     setFormValues((prev) => ({ ...prev, checkOut: nextDate }))
   }
 
+  const handleMarketChange = (nextValue) => {
+    setFormValues((prev) => ({ ...prev, market: nextValue }))
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     dispatch(updateCriteria({ domain: 'hotels', criteria: formValues }))
@@ -45,6 +50,14 @@ export function HotelSearchForm({ compact = false }) {
       onSubmit={handleSubmit}
       className={`grid gap-4 md:items-end ${compact ? 'md:grid-cols-5' : 'md:grid-cols-6'}`}
     >
+      <div className="col-span-full">
+        <MarketSelector
+          value={formValues.market}
+          onChange={handleMarketChange}
+          idPrefix="hotel-market"
+          label="Stay focus"
+        />
+      </div>
       <div className="md:col-span-2">
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="hotel-destination">
           Where to?

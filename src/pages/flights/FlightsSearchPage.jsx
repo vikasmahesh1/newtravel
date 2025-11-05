@@ -75,13 +75,18 @@ export default function FlightsSearchPage() {
               Showing {filteredResults.length} {filteredResults.length === 1 ? 'result' : 'results'}
             </h2>
             <p className="text-sm text-slate-500">
-              Departing from {criteria.origin || 'anywhere'} to {criteria.destination || 'anywhere'}.
+              {criteria.market} journeys departing from {criteria.origin || 'anywhere'} to {criteria.destination || 'anywhere'}.
             </p>
             {meta && (
               <p className="mt-1 text-xs text-slate-400">
                 Sample dataset contains {meta.total} departures spanning {meta.travelDates?.start ? 'from ' : ''}
                 {meta.travelDates?.start ? formatDateTime(meta.travelDates.start) : 'today'} to{' '}
                 {meta.travelDates?.end ? formatDateTime(meta.travelDates.end) : 'the coming weeks'}.
+              </p>
+            )}
+            {criteria.market === 'International' && (
+              <p className="mt-1 text-xs text-primary/70">
+                Tip: Long-haul fares show inclusive lounge access and multi-currency settlement support.
               </p>
             )}
           </div>
@@ -132,6 +137,7 @@ export default function FlightsSearchPage() {
                   Depart {formatDateTime(flight.departure)} · Arrive {formatDateTime(flight.arrival)}
                 </p>
                 <div className="flex flex-wrap gap-2 text-xs text-slate-500">
+                  <span className="rounded-full bg-secondary/10 px-3 py-1 text-secondary">{flight.market}</span>
                   <span>{flight.duration}</span>
                   <span>• {flight.stops === 0 ? 'Nonstop' : `${flight.stops} stop`}</span>
                   <span>• {flight.fareClass}</span>

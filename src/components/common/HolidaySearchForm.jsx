@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { searchHolidays, updateCriteria } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { DatePickerField } from './DatePickerField'
+import { MarketSelector } from './MarketSelector'
 
 const themes = [
   'Romantic retreats',
@@ -47,6 +48,10 @@ export function HolidaySearchForm({ compact = false }) {
     setFormValues((prev) => ({ ...prev, endDate: nextDate }))
   }
 
+  const handleMarketChange = (nextValue) => {
+    setFormValues((prev) => ({ ...prev, market: nextValue }))
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     dispatch(updateCriteria({ domain: 'holidays', criteria: formValues }))
@@ -58,6 +63,14 @@ export function HolidaySearchForm({ compact = false }) {
       onSubmit={handleSubmit}
       className={`grid gap-4 md:items-end ${compact ? 'md:grid-cols-6' : 'md:grid-cols-7'}`}
     >
+      <div className="col-span-full">
+        <MarketSelector
+          value={formValues.market}
+          onChange={handleMarketChange}
+          idPrefix="holiday-market"
+          label="Holiday focus"
+        />
+      </div>
       <div className="md:col-span-2">
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="holiday-theme">
           Theme

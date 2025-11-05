@@ -52,10 +52,26 @@ export default function HotelDetailsPage() {
     <div className="mx-auto max-w-4xl px-6 py-12">
       <div className="card space-y-6">
         <div className="space-y-2">
-          <span className="badge">{hotel.location}</span>
+          <div className="flex flex-wrap gap-2">
+            <span className="badge">{hotel.location}</span>
+            <span className="badge bg-primary/10 text-primary">{hotel.market}</span>
+          </div>
           <h1 className="text-3xl font-semibold text-slate-900">{hotel.name}</h1>
           <p className="text-sm text-slate-500">⭐ {hotel.rating} · {hotel.amenities.join(', ')}</p>
         </div>
+        {hotel.images?.length ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            {hotel.images.slice(0, 4).map((imageUrl, index) => (
+              <img
+                key={imageUrl}
+                src={imageUrl}
+                alt={`${hotel.name} suite preview ${index + 1}`}
+                className="h-48 w-full rounded-3xl object-cover shadow-md"
+                loading={index > 1 ? 'lazy' : 'eager'}
+              />
+            ))}
+          </div>
+        ) : null}
         <div className="rounded-3xl bg-muted p-6 text-sm text-slate-600">
           {hotel.description}
         </div>

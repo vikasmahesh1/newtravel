@@ -1,26 +1,58 @@
 export default [
   {
-    "id": "PR-4001",
-    "title": "Bali Wellness Escape",
-    "description": "Seven-night retreat with curated spa sessions and cultural tours.",
-    "image": "/images/routes/bali.jpg"
+    id: 'PR-4001',
+    title: 'Backwaters & Boutique Alleppey',
+    description: 'Luxury kettuvallam cruise with chef-led tastings and village immersions.',
+    image: '/images/routes/alleppey.jpg',
+    market: 'Domestic',
   },
   {
-    "id": "PR-4002",
-    "title": "Nordic Fjord Adventure",
-    "description": "Cruise, hike, and rail your way through Norway's dramatic landscapes.",
-    "image": "/images/routes/norway.jpg"
+    id: 'PR-4002',
+    title: 'Himalayan Monastery Trail',
+    description: 'Witness dawn prayers across Sikkim and Bhutan with private transfers.',
+    image: '/images/routes/himalayas.jpg',
+    market: 'Domestic',
   },
   {
-    "id": "PR-4003",
-    "title": "Andean Explorer",
-    "description": "Cusco to Machu Picchu luxury train with guided archaeological excursions.",
-    "image": "/images/routes/andes.jpg"
+    id: 'PR-4003',
+    title: 'Royal Rajasthan Sojourn',
+    description: 'Fort stays, curated craft ateliers, and desert safaris across the Thar.',
+    image: '/images/routes/rajasthan.jpg',
+    market: 'Domestic',
   },
   {
-    "id": "PR-4004",
-    "title": "Mediterranean Food Trail",
-    "description": "Taste your way through markets and kitchens across Italy and Greece.",
-    "image": "/images/routes/mediterranean.jpg"
-  }
+    id: 'PR-4004',
+    title: 'Bali Wellness Escape',
+    description: 'Seven-night retreat with curated spa sessions and cultural tours.',
+    image: '/images/routes/bali.jpg',
+    market: 'International',
+  },
+  {
+    id: 'PR-4005',
+    title: 'Nordic Fjord Adventure',
+    description: "Cruise, hike, and rail your way through Norway's dramatic landscapes.",
+    image: '/images/routes/norway.jpg',
+    market: 'International',
+  },
+  {
+    id: 'PR-4006',
+    title: 'Mediterranean Food Trail',
+    description: 'Taste your way through markets and kitchens across Italy and Greece.',
+    image: '/images/routes/mediterranean.jpg',
+    market: 'International',
+  },
+  {
+    id: 'PR-4007',
+    title: 'Andean Explorer',
+    description: 'Cusco to Machu Picchu luxury train with guided archaeological excursions.',
+    image: '/images/routes/andes.jpg',
+    market: 'International',
+  },
+  {
+    id: 'PR-4008',
+    title: 'Malabar Spice Circuit',
+    description: 'Tea gardens, spice estates, and culinary workshops across Kerala.',
+    image: '/images/routes/malabar.jpg',
+    market: 'Domestic',
+  },
 ]

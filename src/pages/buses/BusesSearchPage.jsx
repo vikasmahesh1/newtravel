@@ -68,12 +68,19 @@ export default function BusesSearchPage() {
         <div className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-card md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">{filteredResults.length} coach options</h2>
-            <p className="text-sm text-slate-500">From {criteria.origin || 'any origin'} to {criteria.destination || 'any destination'}.</p>
+            <p className="text-sm text-slate-500">
+              {criteria.market} routes from {criteria.origin || 'any origin'} to {criteria.destination || 'any destination'}.
+            </p>
             {meta?.operators?.length ? (
               <p className="mt-1 text-xs text-slate-400">
                 Operators represented: {meta.operators.join(', ')}.
               </p>
             ) : null}
+            {criteria.market === 'International' && (
+              <p className="mt-1 text-xs text-primary/70">
+                Cross-border journeys include smart immigration briefings and 24x7 concierge updates en route.
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
@@ -115,6 +122,7 @@ export default function BusesSearchPage() {
                   Depart {formatDateTime(bus.departure)} · Arrive {formatDateTime(bus.arrival)}
                 </p>
                 <div className="flex flex-wrap gap-2 text-xs text-slate-500">
+                  <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">{bus.market}</span>
                   <span>{bus.duration}</span>
                   <span>• {bus.operator}</span>
                   <span>• {bus.seating}</span>

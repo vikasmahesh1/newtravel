@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { searchFlights, updateCriteria } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { DatePickerField } from './DatePickerField'
+import { MarketSelector } from './MarketSelector'
 
 export function FlightSearchForm({ compact = false }) {
   const dispatch = useDispatch()
@@ -23,6 +24,10 @@ export function FlightSearchForm({ compact = false }) {
     setFormValues((prev) => ({ ...prev, date: nextDate }))
   }
 
+  const handleMarketChange = (nextValue) => {
+    setFormValues((prev) => ({ ...prev, market: nextValue }))
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     dispatch(updateCriteria({ domain: 'flights', criteria: formValues }))
@@ -34,6 +39,14 @@ export function FlightSearchForm({ compact = false }) {
       onSubmit={handleSubmit}
       className={`grid gap-4 md:items-end ${compact ? 'md:grid-cols-5' : 'md:grid-cols-6'}`}
     >
+      <div className="col-span-full">
+        <MarketSelector
+          value={formValues.market}
+          onChange={handleMarketChange}
+          idPrefix="flight-market"
+          label="Journey focus"
+        />
+      </div>
       <div className="md:col-span-2">
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="flight-origin">
           From

@@ -20,7 +20,7 @@ export function HeroSearchPanel() {
   const [activeTab, setActiveTab] = useState('flights')
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-secondary via-primary to-accent py-20 text-white">
+    <section className="relative overflow-visible bg-gradient-to-br from-secondary via-primary to-accent py-20 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-2 md:items-center">
         <div className="space-y-6">
           <span className="badge bg-white/20 text-white">VyuGo Holidays</span>

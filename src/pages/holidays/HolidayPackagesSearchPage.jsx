@@ -81,11 +81,16 @@ export default function HolidayPackagesSearchPage() {
               {filteredResults.length} curated {filteredResults.length === 1 ? 'escape' : 'escapes'} ready for you
             </h2>
             <p className="text-sm text-slate-500">
-              {criteria.destination ? `Around ${criteria.destination}` : 'Across our most-loved destinations'}.
+              {criteria.market} itineraries {criteria.destination ? `around ${criteria.destination}` : 'across our most-loved destinations'}.
             </p>
             {meta?.themes?.length ? (
               <p className="mt-1 text-xs text-slate-400">Themes available: {meta.themes.join(', ')}.</p>
             ) : null}
+            {criteria.market === 'International' && (
+              <p className="mt-1 text-xs text-primary/70">
+                Enjoy visa concierge, forex planning, and trusted local hosts across every international itinerary.
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <label className="flex items-center gap-2 text-sm font-medium text-slate-600">
@@ -131,6 +136,7 @@ export default function HolidayPackagesSearchPage() {
                 <h3 className="text-xl font-semibold text-slate-900">{trip.name}</h3>
                 <p className="text-sm text-slate-500">{trip.destination}</p>
                 <div className="flex flex-wrap gap-2 text-xs text-slate-500">
+                  <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">{trip.market}</span>
                   <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">{trip.theme}</span>
                   <span>{trip.duration}</span>
                   <span>{trip.travelersIncluded} travelers included</span>

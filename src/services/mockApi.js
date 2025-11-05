@@ -143,6 +143,7 @@ const mockApiImpl = {
           ? flight.from.toLowerCase().includes(criteria.origin.toLowerCase())
           : true
       )
+      .filter((flight) => (criteria.market ? flight.market === criteria.market : true))
 
     return buildSearchEnvelope('flights', criteria, filteredFlights, (items) => ({
       airlines: uniqueValues(items.map((item) => item.airline)),
@@ -150,15 +151,18 @@ const mockApiImpl = {
       stopOptions: uniqueValues(items.map((item) => item.stops)).sort((a, b) => a - b),
       priceRange: computeRange(items, (item) => item.price),
       travelDates: computeIsoRange(items, (item) => item.departure),
+      markets: uniqueValues(items.map((item) => item.market)),
     }))
   },
   async searchHotels(criteria) {
     await wait()
-    const filteredHotels = hotels.filter((hotel) =>
-      criteria.destination
-        ? hotel.location.toLowerCase().includes(criteria.destination.toLowerCase())
-        : true
-    )
+    const filteredHotels = hotels
+      .filter((hotel) =>
+        criteria.destination
+          ? hotel.location.toLowerCase().includes(criteria.destination.toLowerCase())
+          : true
+      )
+      .filter((hotel) => (criteria.market ? hotel.market === criteria.market : true))
 
     return buildSearchEnvelope('hotels', criteria, filteredHotels, (items) => ({
       starRatings: uniqueValues(items.map((item) => item.rating)).sort((a, b) => b - a),
@@ -166,26 +170,30 @@ const mockApiImpl = {
         items.flatMap((item) => item.amenities.slice(0, 6))
       ).sort(),
       priceRange: computeRange(items, (item) => item.pricePerNight),
+      markets: uniqueValues(items.map((item) => item.market)),
     }))
   },
   async searchBuses(criteria) {
     await wait()
-    const filteredBuses = buses.filter((bus) => {
-      const route = bus.route.toLowerCase()
-      const originMatch = criteria.origin
-        ? route.includes(criteria.origin.toLowerCase())
-        : true
-      const destinationMatch = criteria.destination
-        ? route.includes(criteria.destination.toLowerCase())
-        : true
-      return originMatch && destinationMatch
-    })
+    const filteredBuses = buses
+      .filter((bus) => {
+        const route = bus.route.toLowerCase()
+        const originMatch = criteria.origin
+          ? route.includes(criteria.origin.toLowerCase())
+          : true
+        const destinationMatch = criteria.destination
+          ? route.includes(criteria.destination.toLowerCase())
+          : true
+        return originMatch && destinationMatch
+      })
+      .filter((bus) => (criteria.market ? bus.market === criteria.market : true))
 
     return buildSearchEnvelope('buses', criteria, filteredBuses, (items) => ({
       operators: uniqueValues(items.map((item) => item.operator)).sort(),
       seatingTypes: uniqueValues(items.map((item) => item.seating)).sort(),
       priceRange: computeRange(items, (item) => item.price),
       travelWindow: computeIsoRange(items, (item) => item.departure),
+      markets: uniqueValues(items.map((item) => item.market)),
     }))
   },
   async searchHolidays(criteria) {
@@ -198,13 +206,15 @@ const mockApiImpl = {
       const budgetMatch = criteria.budget
         ? packageOption.pricePerPerson * criteria.travelers <= criteria.budget
         : true
-      return destinationMatch && themeMatch && budgetMatch
+      const marketMatch = criteria.market ? packageOption.market === criteria.market : true
+      return destinationMatch && themeMatch && budgetMatch && marketMatch
     })
 
     return buildSearchEnvelope('holidays', criteria, filteredHolidays, (items) => ({
       themes: uniqueValues(items.map((item) => item.theme)).sort(),
       durations: uniqueValues(items.map((item) => item.duration)).sort(),
       priceRange: computeRange(items, (item) => item.pricePerPerson),
+      markets: uniqueValues(items.map((item) => item.market)),
     }))
   },
   async getFlightById(id) {

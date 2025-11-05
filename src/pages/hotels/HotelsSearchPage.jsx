@@ -69,11 +69,18 @@ export default function HotelsSearchPage() {
             <h2 className="text-lg font-semibold text-slate-900">
               {filteredResults.length} {filteredResults.length === 1 ? 'property' : 'properties'} found
             </h2>
-            <p className="text-sm text-slate-500">In {criteria.destination || 'top destinations'}.</p>
+            <p className="text-sm text-slate-500">
+              {criteria.market} stays in {criteria.destination || 'top destinations'}.
+            </p>
             {meta?.priceRange && (
               <p className="mt-1 text-xs text-slate-400">
                 Sample tariff spans {formatINRCurrency(meta.priceRange.min)} –{' '}
                 {formatINRCurrency(meta.priceRange.max)} with {meta.total} curated stays.
+              </p>
+            )}
+            {criteria.market === 'International' && (
+              <p className="mt-1 text-xs text-primary/70">
+                Concierge support includes visa documentation, forex assistance, and multilingual hosts for these itineraries.
               </p>
             )}
           </div>
@@ -115,6 +122,7 @@ export default function HotelsSearchPage() {
                 <h3 className="text-xl font-semibold text-slate-900">{hotel.name}</h3>
                 <p className="text-sm text-slate-500">{hotel.location}</p>
                 <div className="flex flex-wrap gap-2 text-xs text-slate-500">
+                  <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">{hotel.market}</span>
                   <span>⭐ {hotel.rating}</span>
                   {hotel.amenities.slice(0, 3).map((amenity) => (
                     <span key={amenity} className="rounded-full bg-primary/10 px-3 py-1">

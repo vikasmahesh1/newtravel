@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { searchBuses, updateCriteria } from '../../features/search/searchSlice'
 import { selectSearchDomain } from '../../store'
 import { DatePickerField } from './DatePickerField'
+import { MarketSelector } from './MarketSelector'
 
 export function BusSearchForm({ compact = false }) {
   const dispatch = useDispatch()
@@ -23,6 +24,10 @@ export function BusSearchForm({ compact = false }) {
     setFormValues((prev) => ({ ...prev, date: nextDate }))
   }
 
+  const handleMarketChange = (nextValue) => {
+    setFormValues((prev) => ({ ...prev, market: nextValue }))
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     dispatch(updateCriteria({ domain: 'buses', criteria: formValues }))
@@ -34,6 +39,14 @@ export function BusSearchForm({ compact = false }) {
       onSubmit={handleSubmit}
       className={`grid gap-4 md:items-end ${compact ? 'md:grid-cols-4' : 'md:grid-cols-5'}`}
     >
+      <div className="col-span-full">
+        <MarketSelector
+          value={formValues.market}
+          onChange={handleMarketChange}
+          idPrefix="bus-market"
+          label="Route focus"
+        />
+      </div>
       <div className="md:col-span-1">
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-500" htmlFor="bus-origin">
           From
