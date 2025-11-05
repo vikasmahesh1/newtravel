@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma'
+import { asStringArray } from '../utils/json'
 import { buildSearchEnvelope, computeIsoRange, computeRange, uniqueValues } from '../utils/searchEnvelope'
 
 export type FlightSearchCriteria = {
@@ -41,7 +42,7 @@ export const searchFlights = async (criteria: FlightSearchCriteria) => {
     stops: flight.stops,
     price: flight.price,
     fareClass: flight.fareClass,
-    amenities: flight.amenities,
+    amenities: asStringArray(flight.amenities),
     market: flight.market,
     region: flight.region,
   }))
@@ -70,7 +71,7 @@ export const getFlightById = async (id: string) => {
     stops: flight.stops,
     price: flight.price,
     fareClass: flight.fareClass,
-    amenities: flight.amenities,
+    amenities: asStringArray(flight.amenities),
     market: flight.market,
     region: flight.region,
   }

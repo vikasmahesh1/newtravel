@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma'
+import { asStringArray } from '../utils/json'
 import { buildSearchEnvelope, computeRange, uniqueValues } from '../utils/searchEnvelope'
 
 export type HotelSearchCriteria = {
@@ -32,10 +33,10 @@ export const searchHotels = async (criteria: HotelSearchCriteria) => {
     location: hotel.location,
     pricePerNight: hotel.pricePerNight,
     rating: hotel.rating,
-    amenities: hotel.amenities,
+    amenities: asStringArray(hotel.amenities),
     market: hotel.market,
-    images: hotel.images,
-    gallery: hotel.gallery,
+    images: asStringArray(hotel.images),
+    gallery: asStringArray(hotel.gallery),
     description: hotel.description,
   }))
 
@@ -58,10 +59,10 @@ export const getHotelById = async (id: string) => {
     location: hotel.location,
     pricePerNight: hotel.pricePerNight,
     rating: hotel.rating,
-    amenities: hotel.amenities,
+    amenities: asStringArray(hotel.amenities),
     market: hotel.market,
-    images: hotel.images,
-    gallery: hotel.gallery,
+    images: asStringArray(hotel.images),
+    gallery: asStringArray(hotel.gallery),
     description: hotel.description,
   }
 }

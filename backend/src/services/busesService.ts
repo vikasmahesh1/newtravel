@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma'
+import { asStringArray } from '../utils/json'
 import { buildSearchEnvelope, computeIsoRange, computeRange, uniqueValues } from '../utils/searchEnvelope'
 
 export type BusSearchCriteria = {
@@ -37,7 +38,7 @@ export const searchBuses = async (criteria: BusSearchCriteria) => {
     arrival: bus.arrival.toISOString(),
     duration: bus.duration,
     price: bus.price,
-    amenities: bus.amenities,
+    amenities: asStringArray(bus.amenities),
     seating: bus.seating,
     description: bus.description,
     market: bus.market,
@@ -63,7 +64,7 @@ export const getBusById = async (id: string) => {
     arrival: bus.arrival.toISOString(),
     duration: bus.duration,
     price: bus.price,
-    amenities: bus.amenities,
+    amenities: asStringArray(bus.amenities),
     seating: bus.seating,
     description: bus.description,
     market: bus.market,

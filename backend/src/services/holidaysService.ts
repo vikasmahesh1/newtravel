@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma'
+import { asStringArray } from '../utils/json'
 import { buildSearchEnvelope, computeRange, uniqueValues } from '../utils/searchEnvelope'
 
 export type HolidaySearchCriteria = {
@@ -44,10 +45,10 @@ export const searchHolidays = async (criteria: HolidaySearchCriteria) => {
     duration: holiday.duration,
     pricePerPerson: holiday.pricePerPerson,
     travelersIncluded: holiday.travelersIncluded,
-    highlights: holiday.highlights,
+    highlights: asStringArray(holiday.highlights),
     description: holiday.description,
     market: holiday.market,
-    gallery: holiday.gallery,
+    gallery: asStringArray(holiday.gallery),
   }))
 
   return buildSearchEnvelope('holidays', criteria, serialized, (collection) => ({
@@ -69,9 +70,9 @@ export const getHolidayById = async (id: string) => {
     duration: holiday.duration,
     pricePerPerson: holiday.pricePerPerson,
     travelersIncluded: holiday.travelersIncluded,
-    highlights: holiday.highlights,
+    highlights: asStringArray(holiday.highlights),
     description: holiday.description,
     market: holiday.market,
-    gallery: holiday.gallery,
+    gallery: asStringArray(holiday.gallery),
   }
 }

@@ -5,7 +5,7 @@ TypeScript + Express backend that powers the VyuGo travel experience. It mirrors
 ## Prerequisites
 
 - Node.js 18+
-- PostgreSQL 14+
+- MySQL 8.0+ (local instance or hosted service)
 
 ## Setup
 
@@ -17,6 +17,23 @@ npm run prisma:generate
 npm run prisma:migrate -- --name init
 npm run db:seed
 ```
+
+### Using the hosted MySQL database
+
+To work with the credentials you shared (`srv1192.hstgr.io`, database `u544699864_food`), update `.env` with a connection string such as:
+
+```
+DATABASE_URL="mysql://u544699864_food:<password>@srv1192.hstgr.io:3306/u544699864_food"
+```
+
+Then apply the schema and seed data directly to the remote database:
+
+```bash
+npm run prisma:migrate:deploy
+npm run db:seed
+```
+
+> **Note**: Running the seed script multiple times will clear and repopulate the tables to keep the data consistent with the frontend expectations.
 
 ## Development
 
