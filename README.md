@@ -139,6 +139,13 @@ The production build (`npm run build`) outputs a static bundle in `dist/`. Deplo
 
 ## Contribution guidelines
 
+### Branch workflow
+
+- The shared integration branch is **`development`**. Push changes with `git push origin HEAD:development` (or set your
+  local branch's upstream to `origin/development`).
+- Open pull requests against `development` unless your team agrees on a different target (e.g., release branches).
+- Merge to `main` only through tested pull requests originating from `development`.
+
 1. Fork and clone the repository.
 2. Create a feature branch: `git checkout -b feature/my-enhancement`.
 3. Install dependencies and run the development server (`npm run dev`).
