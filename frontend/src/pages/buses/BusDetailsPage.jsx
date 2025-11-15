@@ -30,7 +30,7 @@ export default function BusDetailsPage() {
     title: bus ? `${bus.route} luxury bus | VyuGo Holidays` : 'Bus itinerary | VyuGo Holidays',
     description: bus
       ? `Review departure times, amenities, and seating for ${bus.route} operated by ${bus.operator} before reserving with VyuGo Holidays.`
-      : 'Explore curated Indian bus itineraries and amenities with VyuGo Holidays.',
+      : 'Explore curated Indian bus itineraries and amenities with VyuGo Holidays. Update bus details and reserve your seats today.',
     keywords: 'bus itinerary India, VyuGo buses, reserve bus seats',
     canonicalPath: bus ? `/buses/${bus.id}` : '/buses',
   })
