@@ -25,7 +25,8 @@ const toNumber = (value: string | undefined, fallback: number) => {
 
 export const env = {
   port: toNumber(process.env.PORT, 4000),
-  databaseUrl: process.env.DATABASE_URL ?? 'postgresql://localhost:5432/vyugo',
+  // Prisma schema uses MySQL provider; default to a local MySQL URL when env is missing
+  databaseUrl: process.env.DATABASE_URL ?? 'mysql://127.0.0.1:3306/vyugo',
   jwtSecret: process.env.JWT_SECRET ?? 'development-secret',
   useMockData: toBoolean(process.env.MOCK_DATA, false),
 }

@@ -1,4 +1,5 @@
-import { DEFAULT_CURRENCY, SAMPLE_GENERATED_AT, SEARCH_SCHEMAS, SearchDomain } from './constants'
+import { DEFAULT_CURRENCY, SAMPLE_GENERATED_AT, SEARCH_SCHEMAS } from './constants.ts'
+import type { SearchDomain } from './constants.ts'
 
 export type NumericRange = {
   min: number
